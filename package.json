@@ -12,6 +12,7 @@
     "prepare": "is-ci || husky install"
   },
   "lint-prepush": {
+    "base": "main",
     "tasks": {
       "*.js": {
         "concurrent": ["eslint", "jest"]
