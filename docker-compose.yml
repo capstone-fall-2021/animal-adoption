@@ -5,9 +5,9 @@ services:
     restart: always
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: true
-      MYSQL_USER: "${MYSQL_USER}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${TYPEORM_USERNAME}"
+      MYSQL_PASSWORD: "${TYPEORM_PASSWORD}"
+      MYSQL_DATABASE: "${TYPEORM_DATABASE}"
     ports:
       - 3306:3306
     volumes:
