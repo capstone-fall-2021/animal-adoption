@@ -32,6 +32,3 @@ jobs:
       run: npm run lint
     - name: Run Jest tests
       run: npm run test
-    - name: Build app
-      run: npm run build --if-present
-    
