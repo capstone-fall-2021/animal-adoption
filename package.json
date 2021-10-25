@@ -9,6 +9,7 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
+    "typeorm": "dotenv -c -- typeorm",
     "prepare": "is-ci || husky install"
   },
   "lint-prepush": {
@@ -30,6 +31,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "babel-jest": "^27.3.1",
+    "dotenv-cli": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-config-next": "11.1.2",
     "eslint-config-prettier": "^8.3.0",
