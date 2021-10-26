@@ -1,7 +1,11 @@
-.logo {
-    float:left;
+.float_right {
+    float: right
 }
 
-.account {
-    float:right;
+.float_left {
+    float: left;
+}
+
+.section {
+    clear:both
 }

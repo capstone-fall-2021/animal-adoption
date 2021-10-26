@@ -9,13 +9,29 @@ export default function Layout({ children, home }) {
   return (
     <div>
       <header>
-        <div className={styles.top}>
-          <div className={styles.logo}>Logo</div>
-          <div>
-            <h1>{websiteName}</h1>
+        <div className={styles.section}>
+          <Link href="/">
+            <a>
+              <div className={styles.float_left}>Logo</div>
+            </a>
+          </Link>
+          <div className={styles.float_left}>
+            <Link href="/">
+              <a>
+                <h1>{websiteName}</h1>
+              </a>
+            </Link>
           </div>
-          <div className={styles.account}>Account | Login | Logout</div>
+          <div className={styles.float_right}>
+            <Link href="account">
+              <a>Account</a>
+            </Link>{" "}
+            | Login | Logout
+          </div>
         </div>
+        <hr className={styles.section} />
+        <div>Menu</div>
+        <hr />
       </header>
       <main>{children}</main>
     </div>
