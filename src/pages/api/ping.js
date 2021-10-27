@@ -1,8 +1,8 @@
-import { prepareConnection } from "~/database";
+import prisma from "~/lib/prisma";
 
 export default async function handler(req, res) {
   try {
-    await prepareConnection();
+    await prisma.$executeRaw`SELECT 1`;
     res.status(200).json({ status: "ok" });
   } catch (error) {
     res.status(500).json({ error });

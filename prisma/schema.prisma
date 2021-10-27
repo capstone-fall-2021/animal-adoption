@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Availability {
+  id          Int       @id @default(autoincrement())
+  description String    @db.VarChar(40)
+  profiles    Profile[]
+}
+
+model Breed {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(40)
+  typeId   Int       @db.UnsignedInt
+  profiles Profile[]
+
+  @@index([typeId], map: "typeId")
+}
+
+model Disposition {
+  id          Int    @id @default(autoincrement())
+  description String @db.VarChar(120)
+}
+
+model News {
+  id        Int      @id @default(autoincrement())
+  news      String   @db.VarChar(570)
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  startDate DateTime @db.DateTime(0)
+  endDate   DateTime @db.DateTime(0)
+}
+
+model Profile {
+  id             Int          @id @default(autoincrement())
+  description    String       @db.VarChar(570)
+  pic            String       @db.VarChar(240)
+  typeId         Int          @db.UnsignedInt
+  breedId        Int
+  availabilityId Int
+  createdAt      DateTime     @default(now()) @db.DateTime(0)
+  availability   Availability @relation(fields: [availabilityId], references: [id], onUpdate: Restrict, map: "profile_ibfk_3")
+  breed          Breed        @relation(fields: [breedId], references: [id], onUpdate: Restrict, map: "profile_ibfk_2")
+  type           Type         @relation(fields: [typeId], references: [id], onUpdate: Restrict, map: "profile_ibfk_1")
+
+  @@index([availabilityId], map: "availabilityId")
+  @@index([breedId], map: "breedId")
+  @@index([typeId], map: "typeId")
+}
+
+model Type {
+  id       Int       @id @default(autoincrement()) @db.UnsignedInt
+  name     String    @db.VarChar(40)
+  profiles Profile[]
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  firstName String @db.VarChar(40)
+  lastLame  String @db.VarChar(40)
+  email     String @db.VarChar(80)
+  password  String @db.VarChar(120)
+}
