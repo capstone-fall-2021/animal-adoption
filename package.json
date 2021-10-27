@@ -9,23 +9,24 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "typeorm": "dotenv -c -- typeorm",
     "prepare": "is-ci || husky install"
   },
   "lint-prepush": {
     "base": "main",
     "tasks": {
       "*.js": {
-        "concurrent": ["eslint", "jest"]
+        "concurrent": [
+          "eslint",
+          "jest --passWithNoTests"
+        ]
       }
     }
   },
   "dependencies": {
-    "mysql2": "^2.3.2",
+    "@prisma/client": "^3.3.0",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "typeorm": "^0.2.38"
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -42,6 +43,7 @@
     "jest": "^27.3.1",
     "lint-prepush": "^2.2.0",
     "prettier": "2.4.1",
+    "prisma": "^3.3.0",
     "react-test-renderer": "^17.0.2"
   }
 }
