@@ -1,67 +1,65 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model Availability {
-  id          Int       @id @default(autoincrement())
-  description String    @db.VarChar(40)
-  profiles    Profile[]
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Type {
+  id     Int     @id @default(autoincrement())
+  name   String
+  breeds Breed[]
 }
 
 model Breed {
   id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(40)
-  typeId   Int       @db.UnsignedInt
+  name     String
+  type     Type      @relation(fields: [typeId], references: [id])
+  typeId   Int
   profiles Profile[]
-
-  @@index([typeId], map: "typeId")
 }
 
 model Disposition {
-  id          Int    @id @default(autoincrement())
-  description String @db.VarChar(120)
+  id          Int       @id @default(autoincrement())
+  description String
+  profiles    Profile[]
+}
+
+model Availability {
+  id          Int       @id @default(autoincrement())
+  description String
+  profiles    Profile[]
 }
 
 model News {
   id        Int      @id @default(autoincrement())
-  news      String   @db.VarChar(570)
-  createdAt DateTime @default(now()) @db.DateTime(0)
-  startDate DateTime @db.DateTime(0)
-  endDate   DateTime @db.DateTime(0)
+  news      String   @db.Text
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Profile {
   id             Int          @id @default(autoincrement())
-  description    String       @db.VarChar(570)
-  pic            String       @db.VarChar(240)
-  typeId         Int          @db.UnsignedInt
+  description    String       @db.Text
+  pic            String
+  breed          Breed        @relation(fields: [breedId], references: [id])
   breedId        Int
+  disposition    Disposition  @relation(fields: [dispositionId], references: [id])
+  dispositionId  Int
+  availability   Availability @relation(fields: [availabilityId], references: [id])
   availabilityId Int
-  createdAt      DateTime     @default(now()) @db.DateTime(0)
-  availability   Availability @relation(fields: [availabilityId], references: [id], onUpdate: Restrict, map: "profile_ibfk_3")
-  breed          Breed        @relation(fields: [breedId], references: [id], onUpdate: Restrict, map: "profile_ibfk_2")
-  type           Type         @relation(fields: [typeId], references: [id], onUpdate: Restrict, map: "profile_ibfk_1")
-
-  @@index([availabilityId], map: "availabilityId")
-  @@index([breedId], map: "breedId")
-  @@index([typeId], map: "typeId")
-}
-
-model Type {
-  id       Int       @id @default(autoincrement()) @db.UnsignedInt
-  name     String    @db.VarChar(40)
-  profiles Profile[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model User {
   id        Int    @id @default(autoincrement())
-  firstName String @db.VarChar(40)
-  lastLame  String @db.VarChar(40)
-  email     String @db.VarChar(80)
-  password  String @db.VarChar(120)
+  firstName String
+  lastLame  String
+  email     String
+  password  String
 }
