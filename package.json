@@ -11,6 +11,9 @@
     "test:watch": "jest --watch",
     "prepare": "is-ci || husky install"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "lint-prepush": {
     "base": "main",
     "tasks": {
