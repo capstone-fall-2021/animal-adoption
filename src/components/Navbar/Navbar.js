@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "./Sidebar";
 
@@ -135,6 +136,8 @@ const MobileIcon = styled.div`
 `;
 
 const Navbar = ({ toggle }) => {
+  const { data: session } = useSession();
+
   return (
     <>
       <Nav>
@@ -166,9 +169,11 @@ const Navbar = ({ toggle }) => {
               </NavBtnLink>
             </NavBtn1>
             <NavBtn>
-              <NavBtnLink href="/login" passHref>
-                Log In
-              </NavBtnLink>
+              {session ? (
+                <NavBtnLink onClick={() => signOut()}>Log Out</NavBtnLink>
+              ) : (
+                <NavBtnLink onClick={() => signIn()}>Log In</NavBtnLink>
+              )}
             </NavBtn>
           </NavMenu>
         </NavbarContainer>
