@@ -163,16 +163,18 @@ const Navbar = ({ toggle }) => {
             </NavLink>
           </NavMenu>
           <NavMenu>
-            <NavBtn1>
-              <NavBtnLink href="/signup" passHref>
-                Sign Up
-              </NavBtnLink>
-            </NavBtn1>
             <NavBtn>
               {session ? (
                 <NavBtnLink onClick={() => signOut()}>Log Out</NavBtnLink>
               ) : (
-                <NavBtnLink onClick={() => signIn()}>Log In</NavBtnLink>
+                <>
+                  <NavBtn1>
+                    <NavBtnLink href="/signup" passHref>
+                      Sign Up
+                    </NavBtnLink>
+                  </NavBtn1>
+                  <NavBtnLink onClick={() => signIn()}>Log In</NavBtnLink>
+                </>
               )}
             </NavBtn>
           </NavMenu>
