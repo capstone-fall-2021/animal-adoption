@@ -1,7 +1,11 @@
+import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "~/lib/prisma";
 
 export default NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       credentials: {
@@ -11,15 +15,24 @@ export default NextAuth({
       async authorize(credentials, req) {
         const { email, password } = credentials;
 
-        if (email === "test@example.com" && password === "foo") {
-          return {
-            id: 1,
-            email,
-          };
+        const user = await prisma.user.findFirst({
+          where: { email: credentials.email },
+        });
+
+        if (user !== null) {
+          const isMatch = await bcrypt.compare(password, user.password);
+
+          if (isMatch) {
+            return { id: user.id };
+          }
         }
 
-        return null;
+        throw new Error("The email or password is invalid");
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    jwt: true,
+  },
 });
