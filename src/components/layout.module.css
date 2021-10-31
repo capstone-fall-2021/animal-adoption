@@ -6,6 +6,18 @@
     float: left;
 }
 
+.align_center {
+    text-align:center;
+}
+
 .section {
     clear:both
 }
+
+.news_item {
+    border: 2px solid;
+    border-color: black;
+    float: left;
+    width: 230px;
+}
+
