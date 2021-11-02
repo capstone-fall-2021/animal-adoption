@@ -1,6 +1,6 @@
 import Layout from "~/components/layout";
 
-export default function profiles() {
+export default function Profiles() {
   return (
     <>
       <Layout Home></Layout>

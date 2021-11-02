@@ -6,7 +6,9 @@ export default function Account() {
     <>
       <Layout Home></Layout>
       <div className={styles.section}>
-        <div>Account</div>
+        <div>
+          <h1>Account</h1>
+        </div>
       </div>
     </>
   );
