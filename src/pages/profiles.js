@@ -13,31 +13,31 @@ export const getServerSideProps = async () => {
           name: true,
           type: {
             select: {
-              name: true
-            }
-          }
-        }
+              name: true,
+            },
+          },
+        },
       },
       disposition: {
         select: {
-          description: true
-        }
+          description: true,
+        },
       },
       availability: {
         select: {
-          description: true
-        }
-      }
-    }
-  })
+          description: true,
+        },
+      },
+    },
+  });
 
   const profileDogs = await prisma.profile.findMany({
     where: {
       breed: {
         type: {
-          name: "dog"
-        }
-      }
+          name: "dog",
+        },
+      },
     },
     select: {
       description: true,
@@ -47,47 +47,46 @@ export const getServerSideProps = async () => {
           name: true,
           type: {
             select: {
-              name: true
-            }
-          }
-        }
+              name: true,
+            },
+          },
+        },
       },
       disposition: {
         select: {
-          description: true
-        }
+          description: true,
+        },
       },
       availability: {
         select: {
-          description: true
-        }
-      }
-    }
-  })
+          description: true,
+        },
+      },
+    },
+  });
 
   profileDogs.forEach((item, index) => {
     console.log(item);
-  })
+    console.log(index);
+  });
 
   profileAll.forEach((item, index) => {
     console.log(item);
-  })
-
+    console.log(index);
+  });
 
   return {
     props: {
       profileAll: profileAll,
-    }
-  }
-  
-}
-
+    },
+  };
+};
 
 export default function Profiles(getServerSideProps) {
   return (
     <div className={styles.section}>
       <div>
-          <h1>Profiles</h1>
+        <h1>Profiles</h1>
       </div>
       <div>{getServerSideProps.profileAll.toString()}</div>
     </div>

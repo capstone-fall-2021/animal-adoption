@@ -6,23 +6,21 @@ export const getServerSideProps = async () => {
 
   const newsAll = await prisma.news.findMany({
     select: {
-      news: true
-    }
-  })
+      news: true,
+    },
+  });
 
   newsAll.forEach((item, index) => {
     console.log(item);
-  })
-
-
+    console.log(index);
+  });
 
   return {
     props: {
-      newsall: newsAll
-    }
-  }
-  
-}
+      newsall: newsAll,
+    },
+  };
+};
 
 export default function News(getServerSideProps) {
   return (
