@@ -1,12 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import Head from "next/head";
-import styles from "./Layout.module.css";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Navbar/Sidebar";
 import { useState } from "react";
-
-const websiteName = "Animal Adoption Dating App";
 
 export default function Layout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
