@@ -1,7 +1,5 @@
-import Layout from "~/components/layout";
 import styles from "~/components/layout.module.css";
 import { PrismaClient } from "@prisma/client";
-
 
 export const getServerSideProps = async () => {
   const prisma = new PrismaClient();
@@ -78,8 +76,7 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      test: "hello",
-      profileAll: profileAll
+      profileAll: profileAll,
     }
   }
   
@@ -87,12 +84,9 @@ export const getServerSideProps = async () => {
 
 
 export default function Profiles(getServerSideProps) {
-
   return (
     <div className={styles.section}>
       <div>Profiles</div>
-      <div>availability</div>
-      <div>{getServerSideProps.test}</div>
       <div>{getServerSideProps.profileAll.toString()}</div>
     </div>
   );
