@@ -86,7 +86,9 @@ export const getServerSideProps = async () => {
 export default function Profiles(getServerSideProps) {
   return (
     <div className={styles.section}>
-      <div>Profiles</div>
+      <div>
+          <h1>Profiles</h1>
+      </div>
       <div>{getServerSideProps.profileAll.toString()}</div>
     </div>
   );
