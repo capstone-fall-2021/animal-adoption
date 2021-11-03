@@ -1,10 +1,10 @@
 import styles from "~/components/Layout.module.css";
 
-export default function Account() {
+export default function About() {
   return (
     <div className={styles.section}>
       <div>
-        <h1>Account</h1>
+        <h1>About</h1>
       </div>
     </div>
   );
