@@ -63,17 +63,6 @@ export const getServerSideProps = async () => {
     },
   });
 
-  profileDogs.forEach((item, index) => {
-    console.log(item);
-    console.log(index);
-  });
-
-  profileAll.forEach((item, index) => {
-    console.log(item);
-    console.log(index);
-    console.log(typeof profileAll);
-  });
-
   return {
     props: {
       profileAll: profileAll,
@@ -82,15 +71,20 @@ export const getServerSideProps = async () => {
 };
 
 export default function Profiles(getServerSideProps) {
-  const profileAllDisplay = getServerSideProps.profileAll.map(function(item) {
-    return         <div className={styles.section}>
-    <div className={styles.news_item}>
-      <div className={styles.align_center}>
-        <div>{item.description}</div>
-        <div className={styles.section}>{item.pic}</div>
+  const profileAllDisplay = getServerSideProps.profileAll.map(function (
+    item,
+    index
+  ) {
+    return (
+      <div key={index} className={styles.section}>
+        <div className={styles.news_item}>
+          <div className={styles.align_center}>
+            <div>{item.description}</div>
+            <div className={styles.section}>{item.pic}</div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    );
   });
   return (
     <div className={styles.section}>

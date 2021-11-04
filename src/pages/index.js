@@ -53,35 +53,38 @@ export const getServerSideProps = async () => {
   };
 };
 
-
 export default function Home(getServerSideProps) {
-  const profileAllDisplay = getServerSideProps.profileAll.map(function(item) {
-    return         <div className={styles.section}>
-    <div className={styles.news_item}>
-      <div className={styles.align_center}>
-        <div>{item.description}</div>
-        <div className={styles.section}>{item.pic}</div>
+  const profileAllDisplay = getServerSideProps.profileAll.map(function (
+    item,
+    index
+  ) {
+    return (
+      <div key={index} className={styles.section}>
+        <div className={styles.news_item}>
+          <div className={styles.align_center}>
+            <div>{item.description}</div>
+            <div className={styles.section}>{item.pic}</div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  });
- 
-  const newsAllDisplay = getServerSideProps.newsAll.map(function(item){
-    return <div className={styles.news_item}>{item.news}</div>
+    );
   });
 
+  const newsAllDisplay = getServerSideProps.newsAll.map(function (item, index) {
+    return (
+      <div key={index} className={styles.news_item}>
+        {item.news}
+      </div>
+    );
+  });
 
   return (
-
     <>
-
       <div className={styles.section}>
-      {profileAllDisplay}
+        {profileAllDisplay}
         <hr className={styles.section} />
         <hr className={styles.section} />
-        <div className={styles.section}>
-        {newsAllDisplay}
-        </div>
+        <div className={styles.section}>{newsAllDisplay}</div>
       </div>
     </>
   );
