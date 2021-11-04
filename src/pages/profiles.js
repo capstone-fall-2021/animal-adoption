@@ -66,6 +66,7 @@ export const getServerSideProps = async () => {
   return {
     props: {
       profileAll: profileAll,
+      profileDogs: profileDogs,
     },
   };
 };
@@ -86,12 +87,28 @@ export default function Profiles(getServerSideProps) {
       </div>
     );
   });
+  const profileDogsDisplay = getServerSideProps.profileDogs.map(function (
+    item,
+    index
+  ) {
+    return (
+      <div key={index} className={styles.section}>
+        <div className={styles.news_item}>
+          <div className={styles.align_center}>
+            <div>{item.description}</div>
+            <div className={styles.section}>{item.pic}</div>
+          </div>
+        </div>
+      </div>
+    );
+  });
   return (
     <div className={styles.section}>
       <div>
         <h1>Profiles</h1>
       </div>
       <div>{profileAllDisplay}</div>
+      <div>{profileDogsDisplay}</div>
     </div>
   );
 }
