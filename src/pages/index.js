@@ -36,11 +36,6 @@ export const getServerSideProps = async () => {
     },
   });
 
-  profileAll.forEach((item, index) => {
-    console.log(item);
-    console.log(index);
-  });
-
   const newsAll = await prisma.news.findMany({
     orderBy: [
       {
@@ -52,11 +47,6 @@ export const getServerSideProps = async () => {
     },
   });
 
-  newsAll.forEach((item, index) => {
-    console.log(item);
-    console.log(index);
-  });
-
   return {
     props: {
       profileAll: profileAll,
@@ -65,46 +55,34 @@ export const getServerSideProps = async () => {
   };
 };
 
+
 export default function Home(getServerSideProps) {
+  const profileAllDisplay = getServerSideProps.profileAll.map(function(item) {
+    return         <div className={styles.section}>
+    <div className={styles.news_item}>
+      <div className={styles.align_center}>
+        <div>{item.description}</div>
+        <div className={styles.section}>{item.pic}</div>
+      </div>
+    </div>
+  </div>
+  });
+ 
+  const newsAllDisplay = getServerSideProps.newsAll.map(function(item){
+    return <div className={styles.news_item}>{item.news}</div>
+  });
+
+
   return (
+
     <>
-      <div>{getServerSideProps.profileAll.toString()}</div>
+
       <div className={styles.section}>
-        <div className={styles.section}>
-          <div className={styles.news_item}>
-            <div className={styles.align_center}>
-              <div>animal name 1</div>
-              <div className={styles.section}>Image</div>
-            </div>
-          </div>
-          <div className={styles.news_item}>
-            <div className={styles.align_center}>
-              <div>animal name 2</div>
-              <div className={styles.section}>Image</div>
-            </div>
-          </div>
-          <div className={styles.news_item}>
-            <div className={styles.align_center}>
-              <div>animal name 3</div>
-              <div className={styles.section}>Image</div>
-            </div>
-          </div>
-        </div>
+      {profileAllDisplay}
         <hr className={styles.section} />
         <hr className={styles.section} />
         <div className={styles.section}>
-          <div className={styles.news_item}>
-            News Item One News Item One News Item One News Item One News Item
-            One
-          </div>
-          <div className={styles.news_item}>
-            News Item Two News Item Two News Item Two News Item Two News Item
-            Two
-          </div>
-          <div className={styles.news_item}>
-            News Item Three News Item Three News Item Three News Item Three News
-            Item Three
-          </div>
+        {newsAllDisplay}
         </div>
       </div>
     </>
