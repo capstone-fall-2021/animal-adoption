@@ -1,7 +1,92 @@
-export default function Profiles() {
+import styles from "~/components/layout.module.css";
+import prisma from "~/lib/prisma";
+
+export const getServerSideProps = async () => {
+  const profileAll = await prisma.profile.findMany({
+    select: {
+      description: true,
+      pic: true,
+      breed: {
+        select: {
+          name: true,
+          type: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      disposition: {
+        select: {
+          description: true,
+        },
+      },
+      availability: {
+        select: {
+          description: true,
+        },
+      },
+    },
+  });
+
+  const profileDogs = await prisma.profile.findMany({
+    where: {
+      breed: {
+        type: {
+          name: "dog",
+        },
+      },
+    },
+    select: {
+      description: true,
+      pic: true,
+      breed: {
+        select: {
+          name: true,
+          type: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      disposition: {
+        select: {
+          description: true,
+        },
+      },
+      availability: {
+        select: {
+          description: true,
+        },
+      },
+    },
+  });
+
+  profileDogs.forEach((item, index) => {
+    console.log(item);
+    console.log(index);
+  });
+
+  profileAll.forEach((item, index) => {
+    console.log(item);
+    console.log(index);
+  });
+
+  return {
+    props: {
+      profileAll: profileAll,
+    },
+  };
+};
+
+export default function Profiles(getServerSideProps) {
   return (
-    <div>
-      <h1>Profiles</h1>
+    <div className={styles.section}>
+      <div>
+        <h1>Profiles</h1>
+      </div>
+      <div>{getServerSideProps.profileAll.toString()}</div>
     </div>
   );
 }

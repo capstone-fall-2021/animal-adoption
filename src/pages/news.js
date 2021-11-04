@@ -1,9 +1,30 @@
-import styles from "~/components/Layout.module.css";
+import styles from "~/components/layout.module.css";
+import prisma from "~/lib/prisma";
 
-export default function News() {
+export const getServerSideProps = async () => {
+  const newsAll = await prisma.news.findMany({
+    select: {
+      news: true,
+    },
+  });
+
+  newsAll.forEach((item, index) => {
+    console.log(item);
+    console.log(index);
+  });
+
+  return {
+    props: {
+      newsall: newsAll,
+    },
+  };
+};
+
+export default function News(getServerSideProps) {
   return (
     <div className={styles.section}>
       <div>News</div>
+      <div>{getServerSideProps.newsall.toString()}</div>
     </div>
   );
 }

@@ -12,12 +12,9 @@ export default NextAuth({
         email: { label: "Email", type: "text", placeholder: "Email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const { email, password } = credentials;
-
-        const user = await prisma.user.findFirst({
-          where: { email: credentials.email },
-        });
+        const user = await prisma.user.findFirst({ where: { email } });
 
         if (user !== null) {
           const isMatch = await bcrypt.compare(password, user.password);
