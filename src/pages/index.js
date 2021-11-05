@@ -53,11 +53,8 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default function Home({profileAll, newsAll}) {
-  const profileAllDisplay = profileAll.map(function (
-    item,
-    index
-  ) {
+export default function Home({ profileAll, newsAll }) {
+  const profileAllDisplay = profileAll.map(function (item, index) {
     return (
       <div key={index} className={styles.section}>
         <div className={styles.news_item}>
