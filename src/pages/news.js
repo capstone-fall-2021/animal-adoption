@@ -15,8 +15,8 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default function News(getServerSideProps) {
-  const newsAllDisplay = getServerSideProps.newsAll.map(function (item, index) {
+export default function News({newsAll}) {
+  const newsAllDisplay = newsAll.map(function (item, index) {
     return (
       <div key={index} className={styles.news_item}>
         {item.news}

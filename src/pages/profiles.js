@@ -71,8 +71,8 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default function Profiles(getServerSideProps) {
-  const profileAllDisplay = getServerSideProps.profileAll.map(function (
+export default function Profiles({profileAll, profileDogs}) {
+  const profileAllDisplay = profileAll.map(function (
     item,
     index
   ) {
@@ -87,7 +87,7 @@ export default function Profiles(getServerSideProps) {
       </div>
     );
   });
-  const profileDogsDisplay = getServerSideProps.profileDogs.map(function (
+  const profileDogsDisplay = profileDogs.map(function (
     item,
     index
   ) {
