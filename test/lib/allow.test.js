@@ -16,18 +16,22 @@ describe("allow", () => {
   });
 
   describe("when method is allowed", () => {
+    const req = { method: "GET" };
+
     beforeEach(() => {
-      handler({ method: "GET" }, mockRes);
+      handler(req, mockRes);
     });
 
     it("calls the next middleware function", () => {
-      expect(mockNext).toHaveBeenCalledWith({ method: "GET" }, mockRes);
+      expect(mockNext).toHaveBeenCalledWith(req, mockRes);
     });
   });
 
   describe("when method is not allowed", () => {
+    const req = { method: "PUT" };
+
     beforeEach(() => {
-      handler({ method: "PUT" }, mockRes);
+      handler(req, mockRes);
     });
 
     it("sets the Allow header", () => {
