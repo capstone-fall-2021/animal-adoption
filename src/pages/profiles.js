@@ -65,8 +65,8 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      profileAll: profileAll,
-      profileDogs: profileDogs,
+      profileAll,
+      profileDogs,
     },
   };
 };

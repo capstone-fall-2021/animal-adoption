@@ -10,7 +10,7 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      newsAll: newsAll,
+      newsAll,
     },
   };
 };

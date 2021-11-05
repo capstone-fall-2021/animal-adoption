@@ -47,8 +47,8 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
-      profileAll: profileAll,
-      newsAll: newsAll,
+      profileAll,
+      newsAll,
     },
   };
 };
