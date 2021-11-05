@@ -72,9 +72,9 @@ export const getServerSideProps = async () => {
 };
 
 export default function Profiles({ profileAll, profileDogs }) {
-  const profileAllDisplay = profileAll.map(function (item, index) {
+  const profileAllDisplay = profileAll.map((item) => {
     return (
-      <div key={index} className={styles.section}>
+      <div key={item.id} className={styles.section}>
         <div className={styles.news_item}>
           <div className={styles.align_center}>
             <div>{item.description}</div>
@@ -84,9 +84,9 @@ export default function Profiles({ profileAll, profileDogs }) {
       </div>
     );
   });
-  const profileDogsDisplay = profileDogs.map(function (item, index) {
+  const profileDogsDisplay = profileDogs.map((item) => {
     return (
-      <div key={index} className={styles.section}>
+      <div key={item.id} className={styles.section}>
         <div className={styles.news_item}>
           <div className={styles.align_center}>
             <div>{item.description}</div>

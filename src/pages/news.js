@@ -16,9 +16,9 @@ export const getServerSideProps = async () => {
 };
 
 export default function News({ newsAll }) {
-  const newsAllDisplay = newsAll.map(function (item, index) {
+  const newsAllDisplay = newsAll.map(function (item) {
     return (
-      <div key={index} className={styles.news_item}>
+      <div key={item.id} className={styles.news_item}>
         {item.news}
       </div>
     );

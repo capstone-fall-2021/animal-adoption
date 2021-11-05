@@ -54,9 +54,9 @@ export const getServerSideProps = async () => {
 };
 
 export default function Home({ profileAll, newsAll }) {
-  const profileAllDisplay = profileAll.map(function (item, index) {
+  const profileAllDisplay = profileAll.map((item) => {
     return (
-      <div key={index} className={styles.section}>
+      <div key={item.id} className={styles.section}>
         <div className={styles.news_item}>
           <div className={styles.align_center}>
             <div>{item.description}</div>
@@ -67,9 +67,9 @@ export default function Home({ profileAll, newsAll }) {
     );
   });
 
-  const newsAllDisplay = newsAll.map(function (item, index) {
+  const newsAllDisplay = newsAll.map((item) => {
     return (
-      <div key={index} className={styles.news_item}>
+      <div key={item.id} className={styles.news_item}>
         {item.news}
       </div>
     );
