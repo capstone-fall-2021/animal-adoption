@@ -8,23 +8,25 @@ export const getServerSideProps = async () => {
     },
   });
 
-  newsAll.forEach((item, index) => {
-    console.log(item);
-    console.log(index);
-  });
-
   return {
     props: {
-      newsall: newsAll,
+      newsAll,
     },
   };
 };
 
-export default function News(getServerSideProps) {
+export default function News({ newsAll }) {
+  const newsAllDisplay = newsAll.map(function (item) {
+    return (
+      <div key={item.id} className={styles.news_item}>
+        {item.news}
+      </div>
+    );
+  });
   return (
     <div className={styles.section}>
-      <div>News</div>
-      <div>{getServerSideProps.newsall.toString()}</div>
+      <h1>News</h1>
+      <div>{newsAllDisplay}</div>
     </div>
   );
 }
