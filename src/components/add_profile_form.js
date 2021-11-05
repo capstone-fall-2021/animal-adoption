@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import Router from "next/router";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 import { PrismaClient } from ".prisma/client";
 import { AiOutlineDown as Icon } from "react-icons/ai";
 
@@ -185,7 +183,6 @@ function ProfileForm({ types, dispositions }) {
   const [selectedType, setSelectedOption] = useState(null);
   const [selectedBreed, setSelectedBreed] = useState(null);
   const [selectedDisposition, setSelectedDisposition] = useState(null);
-  var breeds = [];
   var selected_type_name = null;
   var selected_breed = null;
   var selected_dis = null;
@@ -205,12 +202,7 @@ function ProfileForm({ types, dispositions }) {
     selected_type_name = value.name;
     selected_breed = null;
     setSelectedBreed(false);
-    if (value.name == "other") {
-      breeds = ["n/a"];
-    } else {
-      breeds = value.breeds;
-      console.log(selectedType);
-    }
+    console.log(selectedType);
   };
 
   const onBreedClicked = (value) => () => {
