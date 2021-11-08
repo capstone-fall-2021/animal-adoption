@@ -1,7 +1,6 @@
-import bcrypt from "bcrypt";
 import { validate } from "isemail";
 import allow from "~/lib/allow";
-import prisma from "~/lib/prisma";
+import { userEmailExists, hashPassword, registerUser } from "~/lib/user";
 
 export async function handler(req, res) {
   const { email, password } = req.body;
@@ -13,9 +12,9 @@ export async function handler(req, res) {
     } else if (typeof email !== "string" || !validate(email)) {
       errors.push("email is invalid");
     } else {
-      const count = await prisma.user.count({ where: { email } });
+      const emailExists = await userEmailExists(email);
 
-      if (count !== 0) {
+      if (emailExists) {
         errors.push("email is already registered");
       }
     }
@@ -26,18 +25,12 @@ export async function handler(req, res) {
 
     if (errors.length) {
       res.status(400).json({ status: 400, errors });
-    } else {
-      const encryptedPassword = await bcrypt.hash(password, 10);
-
-      const user = await prisma.user.create({
-        data: {
-          email,
-          password: encryptedPassword,
-        },
-      });
-
-      res.status(201).json(user);
+      return;
     }
+
+    const hash = await hashPassword(password);
+    const user = await registerUser({ email, hash });
+    res.status(201).json(user);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
