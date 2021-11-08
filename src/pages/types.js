@@ -2,8 +2,7 @@ import styles from "~/components/Layout.module.css";
 import { useSession } from "next-auth/react";
 
 export default function Types() {
-  // eslint-disable-next-line no-unused-vars
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   if (status === "authenticated") {
     return (
