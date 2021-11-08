@@ -159,9 +159,7 @@ const Navbar = ({ toggle }) => {
                   News Item
                 </NavLink>
               </>
-            ) : (
-              <></>
-            )}
+            ) : null}
           </NavMenu>
           <NavMenu>
             <NavBtn>
