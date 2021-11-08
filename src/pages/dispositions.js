@@ -2,9 +2,10 @@ import styles from "~/components/Layout.module.css";
 import { useSession } from "next-auth/react";
 
 export default function Dispositions() {
-  const { data: status } = useSession();
+  // eslint-disable-next-line no-unused-vars
+  const { data: session, status } = useSession();
 
-  if (status === "authenicated") {
+  if (status === "authenticated") {
     return (
       <div className={styles.section}>
         <div>

@@ -120,10 +120,6 @@ const MobileIcon = styled.div`
 
 const Navbar = ({ toggle }) => {
   const { data: session, status } = useSession();
-  var isAuth = false;
-  if (status === "authenicated") {
-    isAuth = true;
-  }
 
   return (
     <>
@@ -148,7 +144,7 @@ const Navbar = ({ toggle }) => {
             <NavLink href="/account" passHref activeStyle>
               Account
             </NavLink>
-            {isAuth ? (
+            {status === "authenticated" ? (
               <>
                 <NavLink href="/types" passHref activeStyle>
                   Types
@@ -159,7 +155,7 @@ const Navbar = ({ toggle }) => {
                 <NavLink href="/availabilities" passHref activeStyle>
                   Availabilities
                 </NavLink>
-                <NavLink href="/news_item" passHref activeStyle>
+                <NavLink href="/news-items" passHref activeStyle>
                   News Item
                 </NavLink>
               </>
