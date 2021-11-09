@@ -3,27 +3,27 @@ import allow from "~/lib/allow";
 import { userEmailExists, hashPassword, registerUser } from "~/lib/user";
 
 export async function handler(req, res) {
-  const { email, password } = req.body;
-  const errors = [];
-
   try {
+    const { email, password } = req.body;
+    const errors = {};
+
     if (!email) {
-      errors.push("email is required");
+      errors.email = "email is required";
     } else if (typeof email !== "string" || !validate(email)) {
-      errors.push("email is invalid");
+      errors.email = "email is invalid";
     } else {
       const emailExists = await userEmailExists(email);
 
       if (emailExists) {
-        errors.push("email is already registered");
+        errors.email = "email is already registered";
       }
     }
 
     if (!password) {
-      errors.push("password is required");
+      errors.password = "password is required";
     }
 
-    if (errors.length) {
+    if (Object.keys(errors).length) {
       res.status(400).json({ status: 400, errors });
       return;
     }
