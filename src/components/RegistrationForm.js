@@ -2,26 +2,24 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import * as yup from "yup";
 import FormError from "~/components/FormError";
+import { email, password } from "~/schemas";
 
-const schema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().min(10).required(),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "passwords must match"),
-  })
-  .required();
+const schema = yup.object({
+  email: email.required(),
+  password,
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "passwords must match"),
+});
 
-export default function RegistrationForm({ onSubmit, submissionErrors }) {
-  const { register, handleSubmit, formState } = useForm({
+export default function RegistrationForm({ onSubmit }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const errors = {
-    ...formState.errors,
-    ...submissionErrors,
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

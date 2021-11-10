@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 import { $fetch } from "ohmyfetch";
 import { useState } from "react";
 import RegistrationForm from "~/components/RegistrationForm";
+import ErrorList from "~/components/ErrorList";
 
 export default function Signup() {
   const router = useRouter();
-  const [submissionErrors, setSubmissionErrors] = useState({});
+  const [errors, setErrors] = useState([]);
 
   async function handleSubmit(body) {
     try {
@@ -16,20 +17,14 @@ export default function Signup() {
 
       router.push("/api/auth/signin");
     } catch (e) {
-      let errors = {};
-
-      for (const [k, v] of Object.entries(e.data.errors)) {
-        errors[k] = { message: v };
-      }
-
-      setSubmissionErrors(errors);
+      setErrors(e.data.errors);
     }
   }
 
   return (
-    <RegistrationForm
-      onSubmit={handleSubmit}
-      submissionErrors={submissionErrors}
-    />
+    <>
+      <ErrorList errors={errors}></ErrorList>
+      <RegistrationForm onSubmit={handleSubmit} />
+    </>
   );
 }
