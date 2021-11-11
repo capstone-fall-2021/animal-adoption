@@ -100,7 +100,7 @@ const ListItem = styled.li`
   margin-bottom: 0.8rem;
 `;
 
-export default function BreedForm({ types }) {
+export default function BreedForm() {
   const example_types = [
     {
       id: 0,

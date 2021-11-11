@@ -137,7 +137,7 @@ const DescriptionBox = styled.textarea`
   border: none;
 `;
 
-function ProfileForm({ types, dispositions, availability }) {
+function ProfileForm() {
   const example_types = [
     {
       id: 0,
