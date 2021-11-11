@@ -1,4 +1,4 @@
-import ProfileForm from "~/components/Forms/add_profile_form";
+import DispositionForm from "~/components/Forms/add_disposition_form";
 import styled from "styled-components";
 
 const Title = styled.h1`
@@ -9,11 +9,11 @@ const Title = styled.h1`
   width: 100%;
 `;
 
-export default function AddProfile() {
+export default function AddDisposition() {
   return (
     <>
-      <Title>Add a Profile</Title>
-      <ProfileForm />
+      <Title>Add a Disposition</Title>
+      <DispositionForm />
     </>
   );
 }
