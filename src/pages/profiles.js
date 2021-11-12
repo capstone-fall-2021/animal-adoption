@@ -1,96 +1,74 @@
 import styles from "~/components/layout.module.css";
-import { getAllProfiles, getProfilesSearch } from "~/lib/profile";
+import { getAllProfiles, getProfilesSearch, getProfiles } from "~/lib/profile";
 
 export const getServerSideProps = async () => {
   const profileAll = await getAllProfiles();
-  const profileDogs = await getProfilesSearch("dog", null, null, null);
-  const profileCats = await getProfilesSearch("cat", null, null, null);
-  const profileOther = await getProfilesSearch("other", null, null, null);
-  const profileCorgi = await getProfilesSearch(null, "Corgi", null, null);
-  const profileDisposition = await getProfilesSearch(
-    null,
-    null,
-    "Good with children",
-    null
-  );
-  const profileAvailability = await getProfilesSearch(
-    null,
-    null,
-    null,
-    "Available"
-  );
+  const profileDogs = await getProfiles({ type: "dog" });
+  const profileCats = await getProfiles({ type: "cat" });
+  const profileOther = await getProfiles({ type: "other" });
+  const profileCorgi = await getProfiles({ breed: "Corgi" });
+  const profileDisposition = await getProfiles({
+    disposition: "Good with children",
+  });
+  const profileAvailability = await getProfiles({ availability: "Available" });
 
-  const profileDogCorgiAvailabilityDisposition = await getProfilesSearch(
-    "dog",
-    "Corgi",
-    "Good with children",
-    "Available"
-  );
+  const profileDogCorgiAvailabilityDisposition = await getProfiles({
+    type: "dog",
+    breed: "Corgi",
+    disposition: "Good with children",
+    availability: "Available",
+  });
 
-  const profileDogCorgiDisposition = await getProfilesSearch(
-    "dog",
-    "Corgi",
-    "Good with children",
-    null
-  );
+  const profileDogCorgiDisposition = await getProfiles({
+    type: "dog",
+    breed: "Corgi",
+    disposition: "Good with children",
+  });
 
-  const profileDogCorgiAvailability = await getProfilesSearch(
-    "dog",
-    "Corgi",
-    null,
-    "Available"
-  );
+  const profileDogCorgiAvailability = await getProfiles({
+    type: "dog",
+    breed: "Corgi",
+    availability: "Available",
+  });
 
-  const profileDogDispositionAvailability = await getProfilesSearch(
-    "dog",
-    null,
-    "Good with children",
-    "Available"
-  );
+  const profileDogDispositionAvailability = await getProfiles({
+    type: "dog",
+    disposition: "Good with children",
+    availability: "Available",
+  });
 
-  const profileCorgiAvailabilityDisposition = await getProfilesSearch(
-    null,
-    "Corgi",
-    "Good with children",
-    "Available"
-  );
+  const profileCorgiAvailabilityDisposition = await getProfiles({
+    type: "Corgi",
+    disposition: "Good with children",
+    availability: "Available",
+  });
 
-  const profileDogCorgi = await getProfilesSearch("dog", "Corgi", null, null);
+  const profileDogCorgi = await getProfiles({ type: "dog", breed: "Corgi" });
 
-  const profileDogAvailability = await getProfilesSearch(
-    "dog",
-    null,
-    null,
-    "Available"
-  );
+  const profileDogAvailability = await getProfiles({
+    type: "dog",
+    availability: "Available",
+  });
 
-  const profileDogDisposition = await getProfilesSearch(
-    "dog",
-    null,
-    "Good with children",
-    null
-  );
+  const profileDogDisposition = await getProfiles({
+    type: "dog",
+    disposition: "Good with children",
+  });
 
-  const profileCorgiAvailability = await getProfilesSearch(
-    null,
-    "Corgi",
-    null,
-    "Available"
-  );
+  const profileCorgiAvailability = await getProfiles({
+    type: "Corgi",
+    availability: "Available",
+  });
 
-  const profileCorgiDisposition = await getProfilesSearch(
-    null,
-    "Corgi",
-    "Good with children",
-    null
-  );
+  const profileCorgiDisposition = await getProfiles({
+    breed: "Corgi",
+    availability: "Good with children",
+  });
 
-  const profileAvailabilityDisposition = await getProfilesSearch(
-    null,
-    null,
-    "Good with children",
-    "Available"
-  );
+  const profileAvailabilityDisposition = await getProfiles({
+    disposition: "Good with children",
+    availability: "Available",
+  });
 
   return {
     props: {

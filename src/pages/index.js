@@ -1,9 +1,10 @@
 import styles from "~/components/layout.module.css";
 import prisma from "~/lib/prisma";
-import { getAllProfilesDesc } from "~/lib/profile";
+import { getAllProfilesDesc, getProfiles } from "~/lib/profile";
 
 export const getServerSideProps = async () => {
   const profileAll = await getAllProfilesDesc();
+  const profileAllTest = await getProfiles();
 
   const newsAll = await prisma.news.findMany({
     orderBy: [
@@ -19,13 +20,14 @@ export const getServerSideProps = async () => {
   return {
     props: {
       profileAll,
+      profileAllTest,
       newsAll,
     },
   };
 };
 
-export default function Home({ profileAll, newsAll }) {
-  const profileAllDisplay = profileAll.map((item) => {
+export default function Home({ profileAll, profileAllTest, newsAll }) {
+  const profileAllDisplay = profileAllTest.map((item) => {
     return (
       <div key={item.id} className={styles.section}>
         <div className={styles.news_item}>
