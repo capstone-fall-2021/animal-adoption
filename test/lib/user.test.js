@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import prisma from "~/lib/prisma";
-import { userEmailExists, hashPassword, registerUser } from "~/lib/user";
+import { emailExists, hashPassword, registerUser } from "~/lib/user";
 
 jest.mock("bcrypt");
 
@@ -11,20 +11,20 @@ jest.mock("~/lib/prisma", () => ({
   },
 }));
 
-describe("userEmailExists", () => {
+describe("emailExists", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("returns true if the email exists", async () => {
     prisma.user.count.mockResolvedValue(1);
-    const result = await userEmailExists("foo@example.com");
+    const result = await emailExists("foo@example.com");
     expect(result).toBe(true);
   });
 
   it("returns false if the email does not exist", async () => {
     prisma.user.count.mockResolvedValue(0);
-    const result = await userEmailExists("foo@example.com");
+    const result = await emailExists("foo@example.com");
     expect(result).toBe(false);
   });
 });
