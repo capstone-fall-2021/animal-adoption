@@ -1,8 +1,8 @@
 import styles from "~/components/layout.module.css";
-import { getAllProfiles, getProfilesSearch, getProfiles } from "~/lib/profile";
+import { getProfiles } from "~/lib/profile";
 
 export const getServerSideProps = async () => {
-  const profileAll = await getAllProfiles();
+  const profileAll = await getProfiles();
   const profileDogs = await getProfiles({ type: "dog" });
   const profileCats = await getProfiles({ type: "cat" });
   const profileOther = await getProfiles({ type: "other" });
@@ -38,7 +38,7 @@ export const getServerSideProps = async () => {
   });
 
   const profileCorgiAvailabilityDisposition = await getProfiles({
-    type: "Corgi",
+    breed: "Corgi",
     disposition: "Good with children",
     availability: "Available",
   });
@@ -56,13 +56,13 @@ export const getServerSideProps = async () => {
   });
 
   const profileCorgiAvailability = await getProfiles({
-    type: "Corgi",
+    breed: "Corgi",
     availability: "Available",
   });
 
   const profileCorgiDisposition = await getProfiles({
     breed: "Corgi",
-    availability: "Good with children",
+    disposition: "Good with children",
   });
 
   const profileAvailabilityDisposition = await getProfiles({
