@@ -1,38 +1,9 @@
 import styles from "~/components/layout.module.css";
 import prisma from "~/lib/prisma";
+import { getAllProfilesDesc } from "~/lib/profile";
 
 export const getServerSideProps = async () => {
-  const profileAll = await prisma.profile.findMany({
-    orderBy: [
-      {
-        createdAt: "desc",
-      },
-    ],
-    select: {
-      description: true,
-      pic: true,
-      breed: {
-        select: {
-          name: true,
-          type: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-      disposition: {
-        select: {
-          description: true,
-        },
-      },
-      availability: {
-        select: {
-          description: true,
-        },
-      },
-    },
-  });
+  const profileAll = await getAllProfilesDesc();
 
   const newsAll = await prisma.news.findMany({
     orderBy: [
