@@ -1,6 +1,6 @@
 import styles from "~/components/Layout.module.css";
 import { useSession } from "next-auth/react";
-import { getAvailability } from "~/lib/availabilities";
+import { getAvailability } from "~/lib/availability";
 
 export const getServerSideProps = async () => {
   const allAvailabilities = await getAvailability();

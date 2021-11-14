@@ -1,6 +1,6 @@
 import styles from "~/components/Layout.module.css";
 import { useSession } from "next-auth/react";
-import { getAllDispositions } from "~/lib/dispositions";
+import { getAllDispositions } from "~/lib/disposition";
 
 export const getServerSideProps = async () => {
   const dispositionsAll = await getAllDispositions();
