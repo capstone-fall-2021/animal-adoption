@@ -1,8 +1,8 @@
 import styles from "~/components/layout.module.css";
-import { getAllNewsItemsDesc } from "~/lib/news";
+import { getNews } from "~/lib/news";
 
 export const getServerSideProps = async () => {
-  const newsAll = await getAllNewsItemsDesc();
+  const newsAll = await getNews();
 
   return {
     props: {

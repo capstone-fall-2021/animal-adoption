@@ -1,21 +1,11 @@
 import prisma from "~/lib/prisma";
 
-export const getAllNewsItems = () => {
+export const getNews = (options = {}) => {
+  const orderBy = options.orderBy ?? [];
   return prisma.news.findMany({
+    orderBy,
     select: {
-      news: true,
-    },
-  });
-};
-
-export const getAllNewsItemsDesc = () => {
-  return prisma.news.findMany({
-    orderBy: [
-      {
-        createdAt: "desc",
-      },
-    ],
-    select: {
+      id: true,
       news: true,
     },
   });

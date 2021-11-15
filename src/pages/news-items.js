@@ -1,9 +1,9 @@
 import styles from "~/components/Layout.module.css";
 import { useSession } from "next-auth/react";
-import { getAllNewsItemsDesc } from "~/lib/news";
+import { getNews } from "~/lib/news";
 
 export const getServerSideProps = async () => {
-  const newsAll = await getAllNewsItemsDesc();
+  const newsAll = await getNews();
 
   return {
     props: {
@@ -17,6 +17,7 @@ export default function NewsItems({ newsAll }) {
   const newsAllDisplay = newsAll.map(function (item) {
     return (
       <tr key={item.id}>
+        <td>{item.id}</td>
         <td>{item.news}</td>
       </tr>
     );
@@ -29,7 +30,8 @@ export default function NewsItems({ newsAll }) {
           <h1>News Items</h1>
           <table border="2">
             <tr>
-              <th>News</th>
+              <th>id</th>
+              <th>news</th>
             </tr>
             {newsAllDisplay}
           </table>

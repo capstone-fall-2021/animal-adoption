@@ -18,6 +18,7 @@ export default function Types({ allTypes, allBreeds }) {
   const allTypesDisplay = allTypes.map((item) => {
     return (
       <tr key={item.id}>
+        <td>{item.id}</td>
         <td>{item.name}</td>
       </tr>
     );
@@ -25,6 +26,7 @@ export default function Types({ allTypes, allBreeds }) {
   const allBreedsDisplay = allBreeds.map((item) => {
     return (
       <tr key={item.id}>
+        <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{item.type.name}</td>
       </tr>
@@ -37,7 +39,8 @@ export default function Types({ allTypes, allBreeds }) {
           <h1>Types</h1>
           <table border="2">
             <tr>
-              <th>Types</th>
+              <th>id</th>
+              <th>types</th>
             </tr>
             {allTypesDisplay}
           </table>
@@ -46,8 +49,9 @@ export default function Types({ allTypes, allBreeds }) {
           <h1>Breeds</h1>
           <table border="2">
             <tr>
-              <th>Breeds</th>
-              <th>Types</th>
+              <th>id</th>
+              <th>breeds</th>
+              <th>types</th>
             </tr>
             {allBreedsDisplay}
           </table>

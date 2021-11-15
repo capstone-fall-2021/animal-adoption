@@ -17,6 +17,7 @@ export default function Dispositions({ dispositionsAll }) {
   const dispositionAllDisplay = dispositionsAll.map(function (item) {
     return (
       <tr key={item.id}>
+        <td>{item.id}</td>
         <td>{item.description}</td>
       </tr>
     );
@@ -29,7 +30,8 @@ export default function Dispositions({ dispositionsAll }) {
           <h1>Dispositions</h1>
           <table border="2">
             <tr>
-              <th>Description</th>
+              <th>id</th>
+              <th>description</th>
             </tr>
             {dispositionAllDisplay}
           </table>
