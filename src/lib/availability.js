@@ -1,6 +1,6 @@
 import prisma from "~/lib/prisma";
 
-export const getAvailability = () => {
+export const getAvailabilities = () => {
   return prisma.availability.findMany({
     select: {
       id: true,

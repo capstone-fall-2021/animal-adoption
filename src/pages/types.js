@@ -1,10 +1,10 @@
 import styles from "~/components/Layout.module.css";
 import { useSession } from "next-auth/react";
-import { getAllTypes, getAllBreeds } from "~/lib/type";
+import { getTypes, getBreeds } from "~/lib/type";
 
 export const getServerSideProps = async () => {
-  const allTypes = await getAllTypes();
-  const allBreeds = await getAllBreeds();
+  const allTypes = await getTypes();
+  const allBreeds = await getBreeds();
   return {
     props: {
       allTypes,

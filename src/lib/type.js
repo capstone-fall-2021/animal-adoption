@@ -1,6 +1,6 @@
 import prisma from "~/lib/prisma";
 
-export const getAllTypes = () => {
+export const getTypes = () => {
   return prisma.type.findMany({
     select: {
       id: true,
@@ -9,7 +9,7 @@ export const getAllTypes = () => {
   });
 };
 
-export const getAllBreeds = () => {
+export const getBreeds = () => {
   return prisma.breed.findMany({
     select: {
       id: true,
