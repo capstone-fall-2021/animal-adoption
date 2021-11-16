@@ -1,12 +1,8 @@
 import styles from "~/components/layout.module.css";
-import prisma from "~/lib/prisma";
+import { getNews } from "~/lib/news";
 
 export const getServerSideProps = async () => {
-  const newsAll = await prisma.news.findMany({
-    select: {
-      news: true,
-    },
-  });
+  const newsAll = await getNews();
 
   return {
     props: {
