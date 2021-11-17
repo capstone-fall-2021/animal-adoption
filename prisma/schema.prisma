@@ -24,7 +24,7 @@ model Breed {
 model Disposition {
   id          Int       @id @default(autoincrement())
   description String
-  profiles    Profile[]
+  profileDispositions ProfileDisposition[]
 }
 
 model Availability {
@@ -42,18 +42,35 @@ model News {
   updatedAt DateTime @updatedAt
 }
 
+model Pictures {
+  id            Int @id @default(autoincrement())
+  image         String
+  profiles      Profile[]
+}
+
 model Profile {
   id             Int          @id @default(autoincrement())
+  name           String       @db.Text
+  age            Int
   description    String       @db.Text
-  pic            String
+  pic            Pictures     @relation(fields: [picId], references: [id])
+  picId          Int
   breed          Breed        @relation(fields: [breedId], references: [id])
   breedId        Int
-  disposition    Disposition  @relation(fields: [dispositionId], references: [id])
   dispositionId  Int
   availability   Availability @relation(fields: [availabilityId], references: [id])
   availabilityId Int
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  profileDispositions ProfileDisposition[]
+}
+
+model ProfileDisposition {
+  id          Int       @id @default(autoincrement())
+  profile    Profile  @relation(fields: [profileId], references: [id])
+  profileId  Int
+  disposition   Disposition  @relation(fields: [dispositionId], references: [id])
+  dispositionId  Int
 }
 
 // NextAuth
