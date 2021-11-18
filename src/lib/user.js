@@ -3,7 +3,7 @@ import prisma from "~/lib/prisma";
 
 const SALT_ROUNDS = 10;
 
-export async function userEmailExists(email) {
+export async function emailExists(email) {
   const count = await prisma.user.count({ where: { email } });
   return count > 0;
 }
