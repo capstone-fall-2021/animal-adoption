@@ -2,7 +2,7 @@ import prisma from "~/lib/prisma";
 
 export const getProfiles = (options = {}) => {
   const where = {};
-  const { type, breed, disposition, availability } = options;
+  const { type, breed, availability } = options;
 
   const orderBy = options.orderBy ?? [];
 
@@ -19,12 +19,13 @@ export const getProfiles = (options = {}) => {
       ...where.breed,
     };
   }
-
+  /*
   if (disposition != undefined) {
     where.disposition = {
       description: disposition,
     };
   }
+  */
   if (availability != undefined) {
     where.availability = {
       description: availability,
@@ -35,7 +36,9 @@ export const getProfiles = (options = {}) => {
     orderBy,
     select: {
       description: true,
+      /*
       pic: true,
+      */
       breed: {
         select: {
           name: true,
@@ -46,11 +49,13 @@ export const getProfiles = (options = {}) => {
           },
         },
       },
+      /*
       disposition: {
         select: {
           description: true,
         },
       },
+      */
       availability: {
         select: {
           description: true,
