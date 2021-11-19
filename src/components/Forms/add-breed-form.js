@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { PrismaClient } from ".prisma/client";
+import prisma from "~/lib/prisma";
 import { AiOutlineDown as Icon } from "react-icons/ai";
 
 export async function getStaticProps() {
-  const prisma = new PrismaClient();
   const types = await prisma.type.findMany({
     select: {
       id: true,

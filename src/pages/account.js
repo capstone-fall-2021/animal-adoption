@@ -24,6 +24,10 @@ export default function Account() {
         <Link href="/breeds/create" passhref>
           Add Breed
         </Link>
+        <br />
+        <Link href="/profiles/delete" passhref>
+          Delete a Profile
+        </Link>
       </center>
     </div>
   );
