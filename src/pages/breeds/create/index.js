@@ -1,4 +1,4 @@
-import BreedForm from "~/components/Forms/add_breed_form";
+import BreedForm from "~/components/Forms/add-breed-form";
 import styled from "styled-components";
 
 const Title = styled.h1`

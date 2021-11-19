@@ -1,5 +1,5 @@
-import DispositionForm from "~/components/Forms/add-disposition-form";
 import styled from "styled-components";
+import DeleteProfileForm from "~/components/Forms/remove-profile-form";
 
 const Title = styled.h1`
   font-size: 45px;
@@ -9,11 +9,11 @@ const Title = styled.h1`
   width: 100%;
 `;
 
-export default function AddDisposition() {
+export default function AddProfile() {
   return (
     <>
-      <Title>Add a Disposition</Title>
-      <DispositionForm />
+      <Title>Delete a Profile</Title>
+      <DeleteProfileForm />
     </>
   );
 }

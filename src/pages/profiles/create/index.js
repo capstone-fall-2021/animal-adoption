@@ -1,4 +1,4 @@
-import ProfileForm from "~/components/Forms/add_profile_form";
+import ProfileForm from "~/components/Forms/add-profile-form";
 import styled from "styled-components";
 
 const Title = styled.h1`

@@ -29,6 +29,9 @@ const DescriptionTextarea = styled.textarea`
   margin-left: auto;
   margin-right: auto;
   border-radius: 5px;
+  @media screen and (max-width: 375px) {
+    width: 20em;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -39,6 +42,10 @@ const FormContainer = styled.div`
   margin-right: 30%;
   padding-top: 20px;
   border-radius: 30px;
+  @media screen and (max-width: 375px) {
+    margin-right: 10%;
+    margin-left: 10%;
+  }
 `;
 
 export default function TypeForm() {

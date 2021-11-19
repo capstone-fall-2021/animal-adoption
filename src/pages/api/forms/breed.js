@@ -1,6 +1,7 @@
 import prisma from "~/lib/prisma";
+import allow from "~/lib/allow";
 
-const handler = async (req, res) => {
+export async function handler(req, res) {
   if (req.method == "POST") {
     const { body } = req;
     const { name, type, typeId } = JSON.parse(body);
@@ -12,10 +13,9 @@ const handler = async (req, res) => {
     const breed = await prisma.breed.create({
       data: new_breed,
     });
-    // TODO:  add update to type breeds attribute
     return res.status(200).json(breed);
   }
   res.end();
-};
+}
 
-export default handler;
+export default allow(["POST"], handler);

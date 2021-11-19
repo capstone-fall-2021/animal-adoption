@@ -53,6 +53,9 @@ const DropdownContainer = styled.div`
   position: static;
   width: 11em;
   margin-left: 100px;
+  @media screen and (max-width: 812px) {
+    margin-left: -30%;
+  }
 `;
 
 const DropdownHeader = styled.div`
@@ -64,6 +67,10 @@ const DropdownHeader = styled.div`
   border-radius: 10px;
   color: #3faffa;
   background: #ffffff;
+  @media screen and (max-width: 812px) {
+    margin-left: 50%;
+    margin-right: -50%;
+  }
 `;
 
 const DropdownList = styled.ul`
@@ -79,6 +86,9 @@ const DropdownList = styled.ul`
   border-radius: 10px;
   &:first-child {
     padding-top: 0.8em;
+  }
+  @media screen and (max-width: 812px) {
+    margin-left: 50%;
   }
 `;
 
@@ -107,6 +117,9 @@ const FormInput = styled.input`
   margin-bottom: 15px;
   border-radius: 5px;
   border: none;
+  @media screen and (max-width: 812px) {
+    margin-left: 50%;
+  }
 `;
 
 const SubmitBtnLink = styled.button`
@@ -129,11 +142,24 @@ const SubmitBtnLink = styled.button`
   @media screen and (max-width: 1575px) {
     margin-left: 0%;
   }
+  @media screen and (max-width: 812px) {
+    margin-left: 80%;
+  }
 `;
 
 const DescriptionBox = styled.textarea`
   border-radius: 5px;
   border: none;
+  @media screen and (max-width: 812px) {
+    margin-left: 50%;
+    width: 200px;
+  }
+`;
+
+const InputLabel = styled.label`
+  @media screen and (max-width: 812px) {
+    margin-left: 34%;
+  }
 `;
 
 function ProfileForm() {
@@ -270,13 +296,15 @@ function ProfileForm() {
         <Form
           onSubmit={() =>
             registerProfile({
+              name: document.getElementById("name").value,
+              age: document.getElementById("age").value,
               description: document.getElementById("description").value,
-              pic: document.getElementById("photo_url").value,
               breed: selectedBreed,
               breedId: selectedBreed.id,
-              disposition: selectedDisposition,
-              dispositionId: selectedDisposition.id,
               availability: selectedAvailability,
+              availabilityId: selectedAvailability.id,
+              profileDispositions: selectedDisposition,
+              pictures: document.getElementById("image").value,
             })
           }
         >
@@ -362,13 +390,22 @@ function ProfileForm() {
             </DropdownContainer>
           </DropdownArea>
           <DropdownContainer>
-            <FormInput placeholder="Enter photo URL" id="photo_url"></FormInput>
+            <FormInput placeholder="Enter name" id="name"></FormInput>
+            <InputLabel>Enter DOB</InputLabel>
+            <FormInput id="age" type="date"></FormInput>
             <DescriptionBox
               placeholder="Enter a description..."
               id="description"
               cols="50"
               rows="5"
             ></DescriptionBox>
+            <InputLabel>Upload image(s)</InputLabel>
+            <FormInput
+              type="file"
+              id="image"
+              accept="image/png, image/jpeg"
+              multiple
+            ></FormInput>
             <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
           </DropdownContainer>
           <DropdownContainer />

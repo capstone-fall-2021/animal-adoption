@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import prisma from "~/lib/prisma";
+import { getProfiles } from "~/lib/profile";
 import { AiOutlineDown as Icon } from "react-icons/ai";
 
-export async function getStaticProps() {
-  const types = await prisma.type.findMany({
-    select: {
-      id: true,
-      name: true,
-    },
-  });
+export const getServerSideProps = async () => {
+  const profileAll = await getProfiles({ orderBy: [{ createdAt: "desc" }] });
+
   return {
     props: {
-      types: types,
+      profileAll,
     },
   };
-}
-
+};
 const Form = styled.form`
   display: inline-block;
 `;
@@ -29,6 +24,10 @@ const FormContainer = styled.div`
   margin-right: 30%;
   padding-top: 20px;
   border-radius: 30px;
+  @media screen and (max-width: 812px) {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
 `;
 
 const SubmitBtnLink = styled.button`
@@ -48,13 +47,6 @@ const SubmitBtnLink = styled.button`
     background: #fff;
     color: #010606;
   }
-`;
-
-const DescriptionTextarea = styled.textarea`
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 5px;
 `;
 
 const DropdownIcon = styled(Icon)`
@@ -89,8 +81,12 @@ const DropdownList = styled.ul`
   font-size: 1.3rem;
   font-weight: 500;
   border-radius: 10px;
+  padding-right: 15%;
   &:first-child {
     padding-top: 0.8em;
+  }
+  @media screen and (max-width: 1575px) {
+    padding-right: 5%;
   }
 `;
 
@@ -99,52 +95,37 @@ const ListItem = styled.li`
   margin-bottom: 0.8rem;
 `;
 
-export default function BreedForm() {
+export default function DeleteProfileForm() {
   const example_types = [
     {
       id: 0,
-      name: "dog",
-      breeds: [
-        { id: 10, name: "akita" },
-        { id: 12, name: "corgi" },
-        { id: 14, name: "pug" },
-      ],
+      name: "Spot",
     },
     {
       id: 1,
-      name: "cat",
-      breeds: [
-        { id: 12, name: "persian" },
-        { id: 23, name: "siamese" },
-        { id: 34, name: "scottish fold" },
-      ],
+      name: "Mochi",
     },
     {
       id: 2,
-      name: "bird",
-      breeds: [
-        { id: 11, name: "cockatoo" },
-        { id: 22, name: "dove" },
-        { id: 33, name: "parakeet" },
-      ],
+      name: "Bear",
     },
   ];
   const [isOpen, setIsOpen] = useState(false);
   const toggling = () => setIsOpen(!isOpen);
-  const [selectedType, setSelectedOption] = useState(null);
-  var selected_type_name = null;
-  if (selectedType) {
-    selected_type_name = selectedType.name;
+  const [selectedProfile, setSelectedOption] = useState(null);
+  var selected_profile = null;
+  if (selectedProfile) {
+    selected_profile = selectedProfile.name;
   }
   const onOptionClicked = (value) => () => {
     setSelectedOption(value);
     setIsOpen(false);
-    selected_type_name = value.name;
+    selected_profile = value.name;
   };
 
-  const registerBreed = async (item) => {
+  const deleteProfile = async (item) => {
     await fetch("api/forms/breed", {
-      method: "POST",
+      method: "DELETE",
       body: JSON.stringify(item),
     });
     window.location.reload();
@@ -155,39 +136,34 @@ export default function BreedForm() {
         <FormContainer>
           <Form
             onSubmit={() =>
-              registerBreed({
-                name: document.getElementById("description").value,
-                type: selectedType,
-                typeId: selectedType.id,
+              deleteProfile({
+                id: selectedProfile.id,
               })
             }
           >
             <DropdownContainer>
               <DropdownHeader onClick={toggling}>
-                {selected_type_name || "Type"}
+                {selected_profile || "Profiles"}
                 <DropdownIcon />
               </DropdownHeader>
               {isOpen && (
                 <div>
                   <DropdownList>
-                    {example_types.map((type) => (
-                      <ListItem onClick={onOptionClicked(type)} key={type.id}>
-                        {type.name}
+                    {example_types.map((profile) => (
+                      <ListItem
+                        onClick={onOptionClicked(profile)}
+                        key={profile.id}
+                      >
+                        {profile.name}
                       </ListItem>
                     ))}
                   </DropdownList>
                 </div>
               )}
             </DropdownContainer>
-            {!isOpen && selectedType && (
+            {!isOpen && selected_profile && (
               <div>
-                <DescriptionTextarea
-                  rows="2"
-                  cols="30"
-                  placeholder="Enter the breed name"
-                  id="description"
-                ></DescriptionTextarea>
-                <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
+                <SubmitBtnLink type="submit">Delete</SubmitBtnLink>
               </div>
             )}
           </Form>

@@ -1,4 +1,4 @@
-import TypeForm from "~/components/Forms/add_type_form";
+import TypeForm from "~/components/Forms/add-type-form";
 import styled from "styled-components";
 
 const Title = styled.h1`

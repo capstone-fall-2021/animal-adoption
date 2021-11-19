@@ -29,6 +29,10 @@ const FormContainer = styled.div`
   margin-right: 30%;
   padding-top: 20px;
   border-radius: 30px;
+  @media screen and (max-width: 375px) {
+    margin-right: 10%;
+    margin-left: 10%;
+  }
 `;
 
 const SubmitBtnLink = styled.button`

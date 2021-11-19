@@ -1,6 +1,7 @@
 import prisma from "~/lib/prisma";
+import allow from "~/lib/allow";
 
-const handler = async (req, res) => {
+export async function handler(req, res) {
   if (req.method == "POST") {
     const { body } = req;
     const { description } = JSON.parse(body);
@@ -14,6 +15,6 @@ const handler = async (req, res) => {
     return res.status(200).json(disposition);
   }
   res.end();
-};
+}
 
-export default handler;
+export default allow(["POST"], handler);
