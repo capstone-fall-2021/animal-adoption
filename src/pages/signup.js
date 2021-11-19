@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { $fetch } from "ohmyfetch";
 import { useState } from "react";
-import RegistrationForm from "~/components/RegistrationForm";
-import ErrorList from "~/components/ErrorList";
+import RegistrationForm from "~/components/registration-form";
+import ErrorList from "~/components/error-list";
 
 export default function Signup() {
   const router = useRouter();

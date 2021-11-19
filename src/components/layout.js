@@ -1,5 +1,5 @@
-import Navbar from "./Navbar/Navbar";
-import Sidebar from "./Navbar/Sidebar";
+import Navbar from "./navbar";
+import Sidebar from "./sidebar";
 import { useState } from "react";
 
 export default function Layout({ children }) {
