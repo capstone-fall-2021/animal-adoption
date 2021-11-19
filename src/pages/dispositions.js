@@ -1,4 +1,4 @@
-import styles from "~/components/Layout.module.css";
+import styles from "~/components/layout.module.css";
 import { useSession } from "next-auth/react";
 import { getDispositions } from "~/lib/disposition";
 
