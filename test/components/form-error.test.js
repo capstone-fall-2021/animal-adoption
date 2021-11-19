@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FormError from "~/components/FormError";
+import FormError from "~/components/form-error";
 
 describe("FormError", () => {
   it("renders an error message", () => {
