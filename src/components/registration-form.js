@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import * as yup from "yup";
-import FormError from "~/components/FormError";
+import FormError from "~/components/form-error";
 import { email, password } from "~/schemas";
 
 const schema = yup.object({
