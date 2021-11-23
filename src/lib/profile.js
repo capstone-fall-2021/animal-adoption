@@ -37,6 +37,7 @@ export const getProfiles = (options = {}) => {
     where,
     orderBy,
     select: {
+      name: true,
       description: true,
       pictures: {
         select: {
