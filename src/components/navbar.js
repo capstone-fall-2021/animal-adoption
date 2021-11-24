@@ -126,7 +126,7 @@ const Navbar = ({ toggle }) => {
       <Nav>
         <NavbarContainer>
           <NavLogo href="/" passHref>
-            <h1>[Logo]Name</h1>
+            <h1>[Logo] Name</h1>
           </NavLogo>
           <MobileIcon onClick={toggle}>
             <FaBars />
