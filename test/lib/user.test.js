@@ -30,6 +30,12 @@ describe("findUserByEmail", () => {
 });
 
 describe("emailExists", () => {
+  it("counts the number of users with the given email", async () => {
+    const email = "foo@example.com";
+    await emailExists(email);
+    expect(prisma.user.count).toHaveBeenCalledWith({ where: { email } });
+  });
+
   it("returns true if the email exists", async () => {
     prisma.user.count.mockResolvedValue(1);
     const result = await emailExists("foo@example.com");
