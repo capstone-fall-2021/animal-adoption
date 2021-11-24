@@ -11,11 +11,11 @@ jest.mock("~/lib/prisma", () => ({
   },
 }));
 
-describe("emailExists", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
+describe("emailExists", () => {
   it("returns true if the email exists", async () => {
     prisma.user.count.mockResolvedValue(1);
     const result = await emailExists("foo@example.com");
