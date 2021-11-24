@@ -1,50 +1,41 @@
 import styles from "~/components/layout.module.css";
-import { useSession } from "next-auth/react";
 import { getNews } from "~/lib/news";
+import { getSessionUser } from "~/lib/session";
 
-export const getServerSideProps = async () => {
-  const newsAll = await getNews();
+export const getServerSideProps = async (context) => {
+  const user = await getSessionUser(context);
+
+  if (!user?.admin) {
+    return { notFound: true };
+  }
+
+  const news = await getNews();
 
   return {
     props: {
-      newsAll,
+      news,
     },
   };
 };
 
-export default function NewsItems({ newsAll }) {
-  const { status } = useSession();
-  const newsAllDisplay = newsAll.map(function (item) {
-    return (
-      <tr key={item.id}>
-        <td>{item.id}</td>
-        <td>{item.news}</td>
-      </tr>
-    );
-  });
-
-  if (status === "authenticated") {
-    return (
-      <div className={styles.section}>
-        <div>
-          <h1>News Items</h1>
-          <table border="2">
-            <tr>
-              <th>id</th>
-              <th>news</th>
+export default function NewsItems({ news }) {
+  return (
+    <div className={styles.section}>
+      <div>
+        <h1>News Items</h1>
+        <table border="2">
+          <tr>
+            <th>id</th>
+            <th>news</th>
+          </tr>
+          {news.map((item) => (
+            <tr key={item.id}>
+              <td>{item.id}</td>
+              <td>{item.news}</td>
             </tr>
-            {newsAllDisplay}
-          </table>
-        </div>
+          ))}
+        </table>
       </div>
-    );
-  } else {
-    return (
-      <div className={styles.section}>
-        <div>
-          <h1>Not Authorized</h1>
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }

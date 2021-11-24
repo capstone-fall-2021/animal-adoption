@@ -1,50 +1,41 @@
 import styles from "~/components/layout.module.css";
-import { useSession } from "next-auth/react";
 import { getDispositions } from "~/lib/disposition";
+import { getSessionUser } from "~/lib/session";
 
-export const getServerSideProps = async () => {
-  const dispositionsAll = await getDispositions();
+export const getServerSideProps = async (context) => {
+  const user = await getSessionUser(context);
+
+  if (!user?.admin) {
+    return { notFound: true };
+  }
+
+  const dispositions = await getDispositions();
 
   return {
     props: {
-      dispositionsAll,
+      dispositions,
     },
   };
 };
 
-export default function Dispositions({ dispositionsAll }) {
-  const { status } = useSession();
-  const dispositionAllDisplay = dispositionsAll.map(function (item) {
-    return (
-      <tr key={item.id}>
-        <td>{item.id}</td>
-        <td>{item.description}</td>
-      </tr>
-    );
-  });
-
-  if (status === "authenticated") {
-    return (
-      <div className={styles.section}>
-        <div>
-          <h1>Dispositions</h1>
-          <table border="2">
-            <tr>
-              <th>id</th>
-              <th>description</th>
+export default function Dispositions({ dispositions }) {
+  return (
+    <div className={styles.section}>
+      <div>
+        <h1>Dispositions</h1>
+        <table border="2">
+          <tr>
+            <th>id</th>
+            <th>description</th>
+          </tr>
+          {dispositions.map((disposition) => (
+            <tr key={disposition.id}>
+              <td>{disposition.id}</td>
+              <td>{disposition.description}</td>
             </tr>
-            {dispositionAllDisplay}
-          </table>
-        </div>
+          ))}
+        </table>
       </div>
-    );
-  } else {
-    return (
-      <div className={styles.section}>
-        <div>
-          <h1>Not Authorized</h1>
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }
