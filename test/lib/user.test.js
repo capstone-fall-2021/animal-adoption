@@ -1,6 +1,11 @@
 import bcrypt from "bcrypt";
 import prisma from "~/lib/prisma";
-import { emailExists, hashPassword, registerUser } from "~/lib/user";
+import {
+  emailExists,
+  findUserByEmail,
+  hashPassword,
+  registerUser,
+} from "~/lib/user";
 
 jest.mock("bcrypt");
 
@@ -8,11 +13,20 @@ jest.mock("~/lib/prisma", () => ({
   user: {
     count: jest.fn(),
     create: jest.fn(),
+    findUnique: jest.fn(),
   },
 }));
 
 beforeEach(() => {
   jest.clearAllMocks();
+});
+
+describe("findUserByEmail", () => {
+  it("finds a user by their email", async () => {
+    const email = "foo@example.com";
+    await findUserByEmail(email);
+    expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { email } });
+  });
 });
 
 describe("emailExists", () => {
