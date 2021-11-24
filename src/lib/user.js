@@ -16,7 +16,7 @@ export function hashPassword(password) {
   return bcrypt.hash(password, SALT_ROUNDS);
 }
 
-export function registerUser({ email, hash }) {
+export function registerUser(email, hash) {
   return prisma.user.create({
     data: {
       email,

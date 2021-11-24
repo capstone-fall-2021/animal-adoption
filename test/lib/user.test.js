@@ -58,15 +58,15 @@ describe("hashPassword", () => {
 
 describe("registerUser", () => {
   it("creates a user with the correct data", async () => {
-    await registerUser({
-      email: "foo@example.com",
-      hash: "bar",
-    });
+    const email = "foo@example.com";
+    const hash = "bar";
+
+    await registerUser(email, hash);
 
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: {
-        email: "foo@example.com",
-        password: "bar",
+        email,
+        password: hash,
       },
     });
   });
