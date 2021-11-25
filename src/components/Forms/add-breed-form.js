@@ -1,21 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import prisma from "~/lib/prisma";
 import { AiOutlineDown as Icon } from "react-icons/ai";
-
-export async function getStaticProps() {
-  const types = await prisma.type.findMany({
-    select: {
-      id: true,
-      name: true,
-    },
-  });
-  return {
-    props: {
-      types: types,
-    },
-  };
-}
+import { $fetch } from "ohmyfetch";
 
 const Form = styled.form`
   display: inline-block;
@@ -103,36 +89,7 @@ const ListItem = styled.li`
   margin-bottom: 0.8rem;
 `;
 
-export default function BreedForm() {
-  const example_types = [
-    {
-      id: 0,
-      name: "dog",
-      breeds: [
-        { id: 10, name: "akita" },
-        { id: 12, name: "corgi" },
-        { id: 14, name: "pug" },
-      ],
-    },
-    {
-      id: 1,
-      name: "cat",
-      breeds: [
-        { id: 12, name: "persian" },
-        { id: 23, name: "siamese" },
-        { id: 34, name: "scottish fold" },
-      ],
-    },
-    {
-      id: 2,
-      name: "bird",
-      breeds: [
-        { id: 11, name: "cockatoo" },
-        { id: 22, name: "dove" },
-        { id: 33, name: "parakeet" },
-      ],
-    },
-  ];
+export default function BreedForm({ allTypes }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggling = () => setIsOpen(!isOpen);
   const [selectedType, setSelectedOption] = useState(null);
@@ -147,7 +104,7 @@ export default function BreedForm() {
   };
 
   const registerBreed = async (item) => {
-    await fetch("api/forms/breed", {
+    await $fetch("/api/forms/breed", {
       method: "POST",
       body: JSON.stringify(item),
     });
@@ -161,7 +118,6 @@ export default function BreedForm() {
             onSubmit={() =>
               registerBreed({
                 name: document.getElementById("description").value,
-                type: selectedType,
                 typeId: selectedType.id,
               })
             }
@@ -174,7 +130,7 @@ export default function BreedForm() {
               {isOpen && (
                 <div>
                   <DropdownList>
-                    {example_types.map((type) => (
+                    {allTypes.map((type) => (
                       <ListItem onClick={onOptionClicked(type)} key={type.id}>
                         {type.name}
                       </ListItem>

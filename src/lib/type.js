@@ -5,12 +5,6 @@ export const getTypes = () => {
     select: {
       id: true,
       name: true,
-      breeds: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
     },
   });
 };

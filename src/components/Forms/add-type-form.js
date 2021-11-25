@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { $fetch } from "ohmyfetch";
 
 const Form = styled.form`
   display: inline-block;
@@ -50,7 +51,7 @@ const FormContainer = styled.div`
 
 export default function TypeForm() {
   const registerType = async (item) => {
-    await fetch("api/forms/type", {
+    await $fetch("/api/forms/type", {
       method: "POST",
       body: JSON.stringify(item),
     });
@@ -63,7 +64,7 @@ export default function TypeForm() {
           <Form
             onSubmit={() =>
               registerType({
-                description: document.getElementById("description").value,
+                name: document.getElementById("description").value,
               })
             }
           >

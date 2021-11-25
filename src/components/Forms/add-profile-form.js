@@ -1,41 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import prisma from "~/lib/prisma";
 import { AiOutlineDown as Icon } from "react-icons/ai";
-
-export async function getStaticProps() {
-  const types = await prisma.type.findMany({
-    select: {
-      id: true,
-      name: true,
-      breeds: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  });
-  const dispositions = await prisma.disposition.findMany({
-    select: {
-      id: true,
-      description: true,
-    },
-  });
-  const availability = await prisma.availability.findMany({
-    select: {
-      id: true,
-      description: true,
-    },
-  });
-  return {
-    props: {
-      types: types,
-      dispositions: dispositions,
-      availability: availability,
-    },
-  };
-}
+import { $fetch } from "ohmyfetch";
 
 const DropdownIcon = styled(Icon)`
   margin-left: 10px;
@@ -162,76 +128,17 @@ const InputLabel = styled.label`
   }
 `;
 
-function ProfileForm() {
-  const example_types = [
-    {
-      id: 0,
-      name: "dog",
-      breeds: [
-        { id: 10, name: "akita" },
-        { id: 12, name: "corgi" },
-        { id: 14, name: "pug" },
-      ],
-    },
-    {
-      id: 1,
-      name: "cat",
-      breeds: [
-        { id: 12, name: "persian" },
-        { id: 23, name: "siamese" },
-        { id: 34, name: "scottish fold" },
-      ],
-    },
-    {
-      id: 2,
-      name: "bird",
-      breeds: [
-        { id: 11, name: "cockatoo" },
-        { id: 22, name: "dove" },
-        { id: 33, name: "parakeet" },
-      ],
-    },
-  ];
-  const example_dispositions = [
-    {
-      id: 0,
-      description: "Good with other animals",
-    },
-    {
-      id: 1,
-      description: "Good with kids",
-    },
-    {
-      id: 2,
-      description: "Must be leashed at all times",
-    },
-    {
-      id: 3,
-      description: "High Energy",
-    },
-  ];
-  const example_availability = [
-    {
-      id: 0,
-      description: "Available",
-    },
-    {
-      id: 1,
-      description: "Not Available",
-    },
-    {
-      id: 2,
-      description: "Pending",
-    },
-    {
-      id: 3,
-      description: "Adopted",
-    },
-  ];
+export default function ProfileForm({
+  allTypes,
+  allBreeds,
+  allDispositions,
+  allAvailabilities,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenB, setIsOpenB] = useState(false);
   const [isOpenD, setIsOpenD] = useState(false);
   const [isOpenA, setIsOpenA] = useState(false);
+
   const toggling = () => setIsOpen(!isOpen);
   const togglinga = () => setIsOpenA(!isOpenA);
   const togglingb = () => setIsOpenB(!isOpenB);
@@ -239,11 +146,16 @@ function ProfileForm() {
 
   const [selectedType, setSelectedOption] = useState(null);
   const [selectedBreed, setSelectedBreed] = useState(null);
-  const [selectedDisposition, setSelectedDisposition] = useState(null);
   const [selectedAvailability, setSelectedAvailability] = useState(null);
+  const [filteredBreeds, setFilteredBreeds] = useState([]);
+  const [checkedState, setCheckedState] = useState(
+    new Array(allDispositions.length).fill(false)
+  );
+  const [pictures, setPictures] = useState({
+    files: [],
+  });
   var selected_type_name = null;
   var selected_breed = null;
-  var selected_dis = [];
   var selected_avail = null;
   if (selectedType) {
     selected_type_name = selectedType.name;
@@ -251,11 +163,14 @@ function ProfileForm() {
   if (selectedBreed) {
     selected_breed = selectedBreed.name;
   }
-  if (selectedDisposition) {
-    selected_dis = selectedDisposition.name;
-  }
   if (selectedAvailability) {
     selected_avail = selectedAvailability.description;
+  }
+
+  async function filterBreeds(id) {
+    const filtered_list = await allBreeds.filter((breed) => breed.typeId == id);
+    console.log(filtered_list);
+    return filtered_list;
   }
 
   const onOptionClicked = (value) => () => {
@@ -264,6 +179,7 @@ function ProfileForm() {
     selected_type_name = value.name;
     selected_breed = null;
     setSelectedBreed(false);
+    setFilteredBreeds(filterBreeds(value.id));
   };
 
   const onBreedClicked = (value) => () => {
@@ -272,41 +188,54 @@ function ProfileForm() {
     selected_breed = value.name;
   };
 
-  const onDispositionClicked = (value) => () => {
-    setSelectedDisposition(value);
-    selected_dis.push(value);
-  };
-
   const onAvailabilityClicked = (value) => () => {
     setSelectedAvailability(value);
     selected_avail = value.name;
   };
 
   const registerProfile = async (item) => {
-    await fetch("api/forms/profile", {
+    await $fetch("/api/forms/profile", {
       method: "POST",
       body: JSON.stringify(item),
     });
     window.location.reload();
   };
 
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState(updatedCheckedState);
+  };
+
+  const fileSelectedHandler = (e) => {
+    const files = [...pictures.files];
+    files.push(...e.target.files);
+    setPictures({ files });
+  };
+
   return (
     <>
       <FormContainer>
         <Form
-          onSubmit={() =>
+          onSubmit={() => {
+            const birthday = new Date(document.getElementById("age").value);
+            const dispos_list = [];
+            for (var i = 0; i < checkedState.length; i++) {
+              if (checkedState[i] == true) {
+                dispos_list.push(allDispositions[i - 1]);
+              }
+            }
             registerProfile({
               name: document.getElementById("name").value,
-              age: document.getElementById("age").value,
+              age: birthday,
               description: document.getElementById("description").value,
-              breed: selectedBreed,
               breedId: selectedBreed.id,
-              availability: selectedAvailability,
               availabilityId: selectedAvailability.id,
-              profileDispositions: selectedDisposition,
-              pictures: document.getElementById("image").value,
-            })
-          }
+              profileDispositions: dispos_list,
+              pictures: pictures,
+            });
+          }}
         >
           <DropdownArea>
             <DropdownContainer>
@@ -317,7 +246,7 @@ function ProfileForm() {
               {isOpen && (
                 <div>
                   <DropdownList>
-                    {example_types.map((type) => (
+                    {allTypes.map((type) => (
                       <ListItem onClick={onOptionClicked(type)} key={type.id}>
                         {type.name}
                       </ListItem>
@@ -331,16 +260,12 @@ function ProfileForm() {
                 {selected_breed || "Breed"}
                 <DropdownIcon />
               </DropdownHeader>
-              {isOpenB && selectedType && (
+              {isOpenB && selectedType && filteredBreeds && (
                 <div>
                   <DropdownList>
-                    {selectedType.breeds.map((type) => (
-                      <ListItem
-                        onClick={onBreedClicked(type)}
-                        key={type.id}
-                        type="checkbox"
-                      >
-                        {type.name}
+                    {allBreeds.map((breed) => (
+                      <ListItem onClick={onBreedClicked(breed)} key={breed.id}>
+                        {breed.name}
                       </ListItem>
                     ))}
                   </DropdownList>
@@ -355,13 +280,16 @@ function ProfileForm() {
               {isOpenD && (
                 <div>
                   <DropdownList>
-                    {example_dispositions.map((type) => (
-                      <ListItem
-                        onClick={onDispositionClicked(type)}
-                        key={type.id}
-                      >
-                        <input type="checkbox" />
-                        {type.description}
+                    {allDispositions.map((type) => (
+                      <ListItem key={type.id}>
+                        <input
+                          type="checkbox"
+                          id="dispositions"
+                          value={type}
+                          checked={checkedState[type.id]}
+                          onChange={() => handleOnChange(type.id)}
+                        />
+                        <label htmlFor="dispositions">{type.description}</label>
                       </ListItem>
                     ))}
                   </DropdownList>
@@ -376,7 +304,7 @@ function ProfileForm() {
               {isOpenA && (
                 <div>
                   <DropdownList>
-                    {example_availability.map((type) => (
+                    {allAvailabilities.map((type) => (
                       <ListItem
                         onClick={onAvailabilityClicked(type)}
                         key={type.id}
@@ -404,6 +332,7 @@ function ProfileForm() {
               type="file"
               id="image"
               accept="image/png, image/jpeg"
+              onChange={fileSelectedHandler}
               multiple
             ></FormInput>
             <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
@@ -414,5 +343,3 @@ function ProfileForm() {
     </>
   );
 }
-
-export default ProfileForm;

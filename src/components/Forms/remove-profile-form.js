@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { getProfiles } from "~/lib/profile";
 import { AiOutlineDown as Icon } from "react-icons/ai";
+import { $fetch } from "ohmyfetch";
 
-export const getServerSideProps = async () => {
-  const profileAll = await getProfiles({ orderBy: [{ createdAt: "desc" }] });
-
-  return {
-    props: {
-      profileAll,
-    },
-  };
-};
 const Form = styled.form`
   display: inline-block;
 `;
@@ -95,21 +86,7 @@ const ListItem = styled.li`
   margin-bottom: 0.8rem;
 `;
 
-export default function DeleteProfileForm() {
-  const example_types = [
-    {
-      id: 0,
-      name: "Spot",
-    },
-    {
-      id: 1,
-      name: "Mochi",
-    },
-    {
-      id: 2,
-      name: "Bear",
-    },
-  ];
+export default function DeleteProfileForm({ allProfiles }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggling = () => setIsOpen(!isOpen);
   const [selectedProfile, setSelectedOption] = useState(null);
@@ -124,7 +101,7 @@ export default function DeleteProfileForm() {
   };
 
   const deleteProfile = async (item) => {
-    await fetch("api/forms/breed", {
+    await $fetch("/api/forms/breed", {
       method: "DELETE",
       body: JSON.stringify(item),
     });
@@ -149,7 +126,7 @@ export default function DeleteProfileForm() {
               {isOpen && (
                 <div>
                   <DropdownList>
-                    {example_types.map((profile) => (
+                    {allProfiles.map((profile) => (
                       <ListItem
                         onClick={onOptionClicked(profile)}
                         key={profile.id}

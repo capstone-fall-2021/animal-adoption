@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { $fetch } from "ohmyfetch";
 
 const Form = styled.form`
   display: inline-block;
@@ -51,7 +52,7 @@ const FormContainer = styled.div`
 
 export default function DispositionForm() {
   const registerDisposition = async (item) => {
-    await fetch("api/forms/disposition", {
+    await $fetch("/api/forms/disposition", {
       method: "POST",
       body: JSON.stringify(item),
     });
