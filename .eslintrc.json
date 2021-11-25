@@ -4,5 +4,8 @@
     "next/core-web-vitals",
     "plugin:jest/recommended",
     "plugin:prettier/recommended"
-  ]
+  ],
+  "env": {
+    "es6": true
+  }
 }

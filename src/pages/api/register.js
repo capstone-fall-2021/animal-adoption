@@ -23,7 +23,7 @@ export async function handler(req, res) {
 
     const { email, password } = req.body;
     const hash = await hashPassword(password);
-    const user = await registerUser({ email, hash });
+    const user = await registerUser(email, hash);
     res.status(201).json(user);
   } catch (err) {
     if (err.name === "ValidationError") {
