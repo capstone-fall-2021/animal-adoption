@@ -1,6 +1,11 @@
 import bcrypt from "bcrypt";
 import prisma from "~/lib/prisma";
-import { emailExists, hashPassword, registerUser } from "~/lib/user";
+import {
+  emailExists,
+  findUserByEmail,
+  hashPassword,
+  registerUser,
+} from "~/lib/user";
 
 jest.mock("bcrypt");
 
@@ -8,12 +13,27 @@ jest.mock("~/lib/prisma", () => ({
   user: {
     count: jest.fn(),
     create: jest.fn(),
+    findUnique: jest.fn(),
   },
 }));
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+describe("findUserByEmail", () => {
+  it("finds a user by their email", async () => {
+    const email = "foo@example.com";
+    await findUserByEmail(email);
+    expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { email } });
+  });
+});
+
 describe("emailExists", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  it("counts the number of users with the given email", async () => {
+    const email = "foo@example.com";
+    await emailExists(email);
+    expect(prisma.user.count).toHaveBeenCalledWith({ where: { email } });
   });
 
   it("returns true if the email exists", async () => {
@@ -38,15 +58,15 @@ describe("hashPassword", () => {
 
 describe("registerUser", () => {
   it("creates a user with the correct data", async () => {
-    await registerUser({
-      email: "foo@example.com",
-      hash: "bar",
-    });
+    const email = "foo@example.com";
+    const hash = "bar";
+
+    await registerUser(email, hash);
 
     expect(prisma.user.create).toHaveBeenCalledWith({
       data: {
-        email: "foo@example.com",
-        password: "bar",
+        email,
+        password: hash,
       },
     });
   });
