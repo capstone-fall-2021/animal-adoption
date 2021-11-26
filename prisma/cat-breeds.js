@@ -1,4 +1,4 @@
-export const CAT_Breeds = [
+export const CAT_BREEDS = [
   "Abyssinian",
   "American Bobtail",
   "American Curl",
