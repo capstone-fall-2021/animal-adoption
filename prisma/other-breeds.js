@@ -13,7 +13,7 @@ export const OTHER_BREEDS = [
   "Hamster",
   "Gerbil",
   "Tropical Fish",
-  "Iguanas",
+  "Iguana",
   "Gold Fish",
   "Beta",
   "Koi",
