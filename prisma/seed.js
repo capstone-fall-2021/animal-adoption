@@ -1,36 +1,32 @@
 const { PrismaClient } = require("@prisma/client");
+const { CAT_BREEDS, DOG_BREEDS, OTHER_BREEDS } = require("./breeds");
 
 const prisma = new PrismaClient();
+
+function mapBreed(name) {
+  return {
+    name,
+  };
+}
 
 const types = [
   {
     name: "dog",
     breeds: {
-      create: [
-        {
-          name: "Corgi",
-        },
-        {
-          name: "Rat Terrier",
-        },
-        {
-          name: "German Shepherd",
-        },
-      ],
+      create: DOG_BREEDS.map(mapBreed),
     },
   },
   {
     name: "cat",
     breeds: {
-      create: [
-        {
-          name: "Siamese",
-        },
-      ],
+      create: CAT_BREEDS.map(mapBreed),
     },
   },
   {
     name: "other",
+    breeds: {
+      create: OTHER_BREEDS.map(mapBreed),
+    },
   },
 ];
 
@@ -47,6 +43,12 @@ const availabilities = [
   { description: "Adopted" },
 ];
 
+const user = {
+  email: "test@example.com",
+  password: "$2b$10$TncgHn9sFEWmlieQgY9JmOqt/RxyZxuySRLr8S5VE/9gPQliURZwe",
+  admin: true,
+};
+
 async function main() {
   const promises = [];
 
@@ -61,6 +63,8 @@ async function main() {
   for (const availability of availabilities) {
     promises.push(prisma.availability.create({ data: availability }));
   }
+
+  promises.push(prisma.user.create({ data: user }));
 
   await Promise.all(promises);
 }

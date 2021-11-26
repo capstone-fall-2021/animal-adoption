@@ -1,14 +1,14 @@
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Providers from "next-auth/providers";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { findUserByEmail } from "~/lib/user";
-import prisma from "~/lib/prisma";
+import { findUserByEmail } from "~/repositories/users";
+import prisma from "~/prisma";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
-    CredentialsProvider({
+    Providers.Credentials({
       credentials: {
         email: { label: "Email", type: "text", placeholder: "Email" },
         password: { label: "Password", type: "password" },
@@ -32,5 +32,8 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     jwt: true,
+  },
+  jwt: {
+    signingKey: process.env.JWT_SIGNING_KEY,
   },
 });

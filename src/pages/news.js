@@ -1,28 +1,35 @@
+import PropTypes from "prop-types";
 import styles from "~/components/layout.module.css";
-import { getNews } from "~/lib/news";
+import { getNews } from "~/repositories/news";
 
 export const getServerSideProps = async () => {
-  const newsAll = await getNews();
-
   return {
     props: {
-      newsAll,
+      news: await await getNews(),
     },
   };
 };
 
-export default function News({ newsAll }) {
-  const newsAllDisplay = newsAll.map(function (item) {
-    return (
-      <div key={item.id} className={styles.news_item}>
-        {item.news}
-      </div>
-    );
-  });
+export default function News({ news }) {
   return (
     <div className={styles.section}>
       <h1>News</h1>
-      <div>{newsAllDisplay}</div>
+      <div>
+        {news.map((item) => (
+          <div key={item.id} className={styles.news_item}>
+            {item.news}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
+News.propTypes = {
+  news: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      news: PropTypes.string,
+    })
+  ),
+};

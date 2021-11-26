@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import React from "react";
