@@ -14,10 +14,24 @@
     clear:both
 }
 
+.column_section {
+  margin-right: 20px;
+  margin-left: 20px;
+}
 .news_item {
     border: 2px solid;
     border-color: black;
     float: left;
     width: 230px;
+}
+
+.admin_nav_background {
+  padding: 10px;
+  background-color: cadetblue;
+}
+
+.admin_nav_links {
+  margin-right: 10px;
+  margin-left: 10px;
 }
 

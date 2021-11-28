@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/client";
+import PropTypes from "prop-types";
 import { FaBars } from "react-icons/fa";
+import styled from "styled-components";
 
 const Nav = styled.nav`
   background: #000;
@@ -118,53 +118,53 @@ const MobileIcon = styled.div`
   }
 `;
 
-const Navbar = ({ toggle }) => {
-  const { data: session } = useSession();
+export default function Navbar({ toggle }) {
+  const [session] = useSession();
 
   return (
-    <>
-      <Nav>
-        <NavbarContainer>
-          <NavLogo href="/" passHref>
-            <h1>[Logo] Name</h1>
-          </NavLogo>
-          <MobileIcon onClick={toggle}>
-            <FaBars />
-          </MobileIcon>
-          <NavMenu>
-            <NavLink href="/about" passHref activeStyle>
-              About
-            </NavLink>
-            <NavLink href="/profiles" passHref activeStyle>
-              Animals
-            </NavLink>
-            <NavLink href="/news" passHref activeStyle>
-              News
-            </NavLink>
-            <NavLink href="/account" passHref activeStyle>
-              Account
-            </NavLink>
-          </NavMenu>
-          <NavMenu>
-            <NavBtn>
-              {session ? (
-                <NavBtnLink onClick={() => signOut()}>Log Out</NavBtnLink>
-              ) : (
-                <>
-                  <NavBtn1>
-                    <NavBtnLink href="/signup" passHref>
-                      Sign Up
-                    </NavBtnLink>
-                  </NavBtn1>
-                  <NavBtnLink onClick={() => signIn()}>Log In</NavBtnLink>
-                </>
-              )}
-            </NavBtn>
-          </NavMenu>
-        </NavbarContainer>
-      </Nav>
-    </>
+    <Nav>
+      <NavbarContainer>
+        <NavLogo href="/" passHref>
+          <h1>[Logo] Name</h1>
+        </NavLogo>
+        <MobileIcon onClick={toggle}>
+          <FaBars />
+        </MobileIcon>
+        <NavMenu>
+          <NavLink href="/about" passHref activeStyle>
+            About
+          </NavLink>
+          <NavLink href="/profiles" passHref activeStyle>
+            Animals
+          </NavLink>
+          <NavLink href="/news" passHref activeStyle>
+            News
+          </NavLink>
+          <NavLink href="/account" passHref activeStyle>
+            Account
+          </NavLink>
+        </NavMenu>
+        <NavMenu>
+          <NavBtn>
+            {session ? (
+              <NavBtnLink onClick={() => signOut()}>Log Out</NavBtnLink>
+            ) : (
+              <>
+                <NavBtn1>
+                  <NavBtnLink href="/signup" passHref>
+                    Sign Up
+                  </NavBtnLink>
+                </NavBtn1>
+                <NavBtnLink onClick={() => signIn()}>Log In</NavBtnLink>
+              </>
+            )}
+          </NavBtn>
+        </NavMenu>
+      </NavbarContainer>
+    </Nav>
   );
-};
+}
 
-export default Navbar;
+Navbar.propTypes = {
+  toggle: PropTypes.func,
+};

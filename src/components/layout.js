@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 import { useState } from "react";
