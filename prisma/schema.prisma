@@ -9,7 +9,7 @@ generator client {
 
 model Type {
   id     Int     @id @default(autoincrement())
-  name   String
+  name   String  @unique
   breeds Breed[]
 }
 
@@ -22,8 +22,8 @@ model Breed {
 }
 
 model Disposition {
-  id          Int       @id @default(autoincrement())
-  description String
+  id                  Int                  @id @default(autoincrement())
+  description         String
   profileDispositions ProfileDisposition[]
 }
 
@@ -42,34 +42,27 @@ model News {
   updatedAt DateTime @updatedAt
 }
 
-model Pictures {
-  id            Int @id @default(autoincrement())
-  profile       Profile[] @relation(fields: [profileId], references: [id])
-  profileId     Int
-  image         Bytes
-}
-
 model Profile {
-  id             Int          @id @default(autoincrement())
-  name           String       @db.Text
-  age            DateTime
-  description    String       @db.Text
-  breed          Breed        @relation(fields: [breedId], references: [id])
+  id             Int                  @id @default(autoincrement())
+  name           String               @db.Text
+  dob            DateTime
+  description    String               @db.Text
+  picture        Bytes?
+  breed          Breed                @relation(fields: [breedId], references: [id])
   breedId        Int
-  availability   Availability @relation(fields: [availabilityId], references: [id])
+  availability   Availability         @relation(fields: [availabilityId], references: [id])
   availabilityId Int
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  profileDispositions ProfileDisposition[]
-  pictures Pictures[]
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  dispositions   ProfileDisposition[]
 }
 
 model ProfileDisposition {
-  id          Int       @id @default(autoincrement())
-  profile    Profile  @relation(fields: [profileId], references: [id])
-  profileId  Int
-  disposition   Disposition  @relation(fields: [dispositionId], references: [id])
-  dispositionId  Int
+  id            Int         @id @default(autoincrement())
+  profile       Profile     @relation(fields: [profileId], references: [id])
+  profileId     Int
+  disposition   Disposition @relation(fields: [dispositionId], references: [id])
+  dispositionId Int
 }
 
 // NextAuth

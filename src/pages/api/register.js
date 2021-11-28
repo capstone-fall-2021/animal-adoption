@@ -1,6 +1,6 @@
 import * as yup from "yup";
-import allow from "~/lib/allow";
-import { emailExists, hashPassword, registerUser } from "~/lib/user";
+import { connect } from "~/middleware";
+import { emailExists, hashPassword, registerUser } from "~/repositories/users";
 import { email, password } from "~/schemas";
 
 const schema = yup.object({
@@ -14,24 +14,22 @@ const schema = yup.object({
   password,
 });
 
-export async function handler(req, res) {
-  try {
-    await schema.validate(req.body, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
+const handler = connect();
 
+handler.post(async (req, res) => {
+  try {
+    await schema.validate(req.body, { stripUnknown: true });
     const { email, password } = req.body;
     const hash = await hashPassword(password);
     const user = await registerUser(email, hash);
     res.status(201).json(user);
   } catch (err) {
     if (err.name === "ValidationError") {
-      res.status(400).json({ errors: err.errors });
+      res.status(400).json({ error: err.errors[0] });
     } else {
-      res.status(500).json({ errors: [err.message] });
+      throw err;
     }
   }
-}
+});
 
-export default allow(["POST"], handler);
+export default handler;

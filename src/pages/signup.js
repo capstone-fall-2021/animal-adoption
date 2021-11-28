@@ -1,14 +1,31 @@
+import { getSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import { $fetch } from "ohmyfetch";
 import { useState } from "react";
-import RegistrationForm from "~/components/registration-form";
-import ErrorList from "~/components/error-list";
+import { RegistrationForm } from "~/components/users";
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+}
 
 export default function Signup() {
   const router = useRouter();
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState("");
 
   async function handleSubmit(body) {
+    setError("");
+
     try {
       await $fetch("/api/register", {
         method: "POST",
@@ -17,14 +34,9 @@ export default function Signup() {
 
       router.push("/api/auth/signin");
     } catch (e) {
-      setErrors(e.data.errors);
+      setError(e.data.error);
     }
   }
 
-  return (
-    <>
-      <ErrorList errors={errors}></ErrorList>
-      <RegistrationForm onSubmit={handleSubmit} />
-    </>
-  );
+  return <RegistrationForm onSubmit={handleSubmit} error={error} />;
 }
