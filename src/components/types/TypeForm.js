@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { FormError } from "~/components/form";
+import { type, useFormWithSchema } from "~/schemas";
 
 const Form = styled.form`
   display: inline-block;
@@ -25,16 +26,6 @@ const SubmitBtnLink = styled.button`
   }
 `;
 
-const DescriptionTextarea = styled.textarea`
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 5px;
-  @media screen and (max-width: 375px) {
-    width: 20em;
-  }
-`;
-
 const FormContainer = styled.div`
   display: block;
   align-content: center;
@@ -50,19 +41,28 @@ const FormContainer = styled.div`
 `;
 
 export default function TypeForm({ onSubmit }) {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormWithSchema(type);
 
   return (
     <center>
       <FormContainer>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <DescriptionTextarea
-            {...register("name")}
-            rows="4"
-            cols="50"
-            placeholder="Enter name of animal type"
-          />
-          <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
+          <div>
+            <label htmlFor="name">Name</label>
+          </div>
+          <div>
+            <input id="name" type="text" {...register("name")} />
+            <div>
+              <FormError error={errors.name} />
+            </div>
+          </div>
+          <div>
+            <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
+          </div>
         </Form>
       </FormContainer>
     </center>

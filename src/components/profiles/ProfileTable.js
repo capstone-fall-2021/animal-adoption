@@ -26,11 +26,13 @@ export default function ProfileTable({ profiles }) {
 }
 
 ProfileTable.propTypes = {
-  profiles: PropTypes.arrayOf({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    availability: PropTypes.shape({
-      description: PropTypes.string,
-    }),
-  }),
+  profiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      availability: PropTypes.shape({
+        description: PropTypes.string,
+      }),
+    })
+  ),
 };
