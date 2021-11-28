@@ -4,8 +4,7 @@ import { getImageByName } from "~/repositories/images";
 const handler = connect();
 
 handler.get(async (req, res) => {
-  const name = `${req.query.path}/${req.query.name}`;
-  const image = await getImageByName(name);
+  const image = await getImageByName(req.query.name);
 
   if (image) {
     res.setHeader("Content-Type", image.mimeType);
