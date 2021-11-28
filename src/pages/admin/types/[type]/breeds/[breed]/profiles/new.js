@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { AdminNavbar } from "~/components/admin";
 import { ProfileForm } from "~/components/profiles";
 import { findAvailabilities } from "~/repositories/availabilities";
 import { getBreedByName } from "~/repositories/breeds";
@@ -68,6 +69,7 @@ export default function NewProfile({
 
   return (
     <>
+      <AdminNavbar />
       <Title>Add a Profile</Title>
       <ProfileForm
         dispositions={dispositions}
