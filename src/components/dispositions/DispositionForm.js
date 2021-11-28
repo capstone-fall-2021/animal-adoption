@@ -1,6 +1,9 @@
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { FormError } from "~/components/form";
+import { disposition } from "~/schemas";
 
 const Form = styled.form`
   display: inline-block;
@@ -25,17 +28,6 @@ const SubmitBtnLink = styled.button`
   }
 `;
 
-const DescriptionTextarea = styled.textarea`
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 5px;
-  @media screen and (max-width: 375px) {
-    margin-left: 3%;
-    width: 20em;
-  }
-`;
-
 const FormContainer = styled.div`
   display: block;
   align-content: center;
@@ -51,19 +43,30 @@ const FormContainer = styled.div`
 `;
 
 export default function DispositionForm({ onSubmit }) {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(disposition),
+  });
 
   return (
     <center>
       <FormContainer>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <DescriptionTextarea
-            {...register("description")}
-            rows="4"
-            cols="50"
-            placeholder="Enter disposition description"
-          ></DescriptionTextarea>
-          <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
+          <div>
+            <label htmlFor="description">Description</label>
+          </div>
+          <div>
+            <input {...register("description")} id="description" type="text" />
+            <div>
+              <FormError error={errors.description} />
+            </div>
+          </div>
+          <div>
+            <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
+          </div>
         </Form>
       </FormContainer>
     </center>

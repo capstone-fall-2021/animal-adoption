@@ -3,6 +3,7 @@ import {
   createDisposition,
   findDispositions,
 } from "~/repositories/dispositions";
+import { disposition } from "~/schemas";
 
 const handler = connect();
 handler.use(requireAdminSession(["POST"]));
@@ -13,6 +14,7 @@ handler.get(async (req, res) => {
 });
 
 handler.post(async (req, res) => {
+  await disposition.validate(req.body);
   const { description } = req.body;
   const result = await createDisposition(description);
   res.status(201).json(result);
