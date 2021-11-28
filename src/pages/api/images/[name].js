@@ -8,6 +8,7 @@ handler.get(async (req, res) => {
 
   if (image) {
     res.setHeader("Content-Type", image.mimeType);
+    res.setHeader("Content-Length", image.contents.length);
     res.status(200).send(image.contents);
   } else {
     res.status(404).send("Not found");
