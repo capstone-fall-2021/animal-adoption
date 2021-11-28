@@ -34,7 +34,7 @@ export default function Signup() {
 
       router.push("/api/auth/signin");
     } catch (e) {
-      setError(e.data.error);
+      setError(e.data);
     }
   }
 

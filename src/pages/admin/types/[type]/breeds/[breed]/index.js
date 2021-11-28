@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
+import { AdminNavbar } from "~/components/admin";
 import { ProfileTable } from "~/components/profiles";
 import { getBreedByName } from "~/repositories/breeds";
 import { getTypeByName } from "~/repositories/types";
@@ -35,6 +36,7 @@ export default function Breeds({ type, breed, profiles }) {
 
   return (
     <div>
+      <AdminNavbar />
       <h1>Breed: {breed}</h1>
       <button onClick={handleNewProfileClick}>New Profile</button>
       <ProfileTable profiles={profiles} />

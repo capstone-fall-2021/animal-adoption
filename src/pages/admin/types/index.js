@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
+import { AdminNavbar } from "~/components/admin";
 import { TypeList } from "~/components/types";
 import { findTypes } from "~/repositories/types";
 import { withAdminSession } from "~/session";
@@ -21,11 +22,12 @@ export default function Types({ types }) {
   }
 
   return (
-    <div>
+    <>
+      <AdminNavbar />
       <h1>Types</h1>
       <button onClick={handleNewTypeClick}>New Type</button>
       <TypeList types={types} />
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { $fetch } from "ohmyfetch";
 import styled from "styled-components";
+import { AdminNavbar } from "~/components/admin";
 import { TypeForm } from "~/components/types";
 import { withAdminSession } from "~/session";
 
@@ -28,6 +29,7 @@ export default function NewType() {
 
   return (
     <>
+      <AdminNavbar />
       <Title>Add a Type</Title>
       <TypeForm onSubmit={handleSubmit} />
     </>

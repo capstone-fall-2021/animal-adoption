@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { FormError } from "~/components/form";
+import { breed, useFormWithSchema } from "~/schemas";
 
 const Form = styled.form`
   display: inline-block;
@@ -39,27 +40,27 @@ const SubmitBtnLink = styled.button`
   }
 `;
 
-const DescriptionTextarea = styled.textarea`
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 5px;
-`;
-
 export default function BreedForm({ onSubmit }) {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormWithSchema(breed);
 
   return (
     <center>
       <FormContainer>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <DescriptionTextarea
-              {...register("name")}
-              rows="2"
-              cols="30"
-              placeholder="Enter the breed name"
-            />
+            <label htmlFor="name">Name</label>
+          </div>
+          <div>
+            <input id="name" type="text" {...register("name")} />
+            <div>
+              <FormError error={errors.name} />
+            </div>
+          </div>
+          <div>
             <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
           </div>
         </Form>
