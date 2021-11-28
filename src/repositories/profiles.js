@@ -85,7 +85,7 @@ export function findProfilesByBreedId(breedId) {
   });
 }
 
-export function createProfile({ dispositionIds, ...profile }) {
+export function createProfile({ dispositionIds, image, ...profile }) {
   return prisma.profile.create({
     data: {
       ...profile,
@@ -93,6 +93,9 @@ export function createProfile({ dispositionIds, ...profile }) {
         create: dispositionIds.map((dispositionId) => ({
           dispositionId,
         })),
+      },
+      images: {
+        create: [image],
       },
     },
   });
