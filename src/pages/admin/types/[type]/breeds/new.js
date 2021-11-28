@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { $fetch } from "ohmyfetch";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { AdminNavbar } from "~/components/admin";
 import { BreedForm } from "~/components/breeds";
 import { getTypeByName } from "~/repositories/types";
 import { withAdminSession } from "~/session";
@@ -42,6 +43,7 @@ export default function NewBreed({ type }) {
 
   return (
     <>
+      <AdminNavbar />
       <Title>Add a Breed</Title>
       <BreedForm onSubmit={handleSubmit} />
     </>

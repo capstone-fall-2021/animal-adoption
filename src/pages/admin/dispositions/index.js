@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
+import { AdminNavbar } from "~/components/admin";
 import { DispositionList } from "~/components/dispositions";
 import { findDispositions } from "~/repositories/dispositions";
 import { withAdminSession } from "~/session";
@@ -22,6 +23,7 @@ export default function Dispositions({ dispositions }) {
 
   return (
     <div>
+      <AdminNavbar />
       <h1>Dispositions</h1>
       <button onClick={handleNewDispositionClick}>New Disposition</button>
       <DispositionList dispositions={dispositions} />

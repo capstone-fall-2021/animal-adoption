@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { $fetch } from "ohmyfetch";
 import styled from "styled-components";
+import { AdminNavbar } from "~/components/admin";
 import { DispositionForm } from "~/components/dispositions";
 import { withAdminSession } from "~/session";
 
@@ -28,6 +29,7 @@ export default function NewDisposition() {
 
   return (
     <>
+      <AdminNavbar />
       <Title>Add a Disposition</Title>
       <DispositionForm onSubmit={handleSubmit} />
     </>
