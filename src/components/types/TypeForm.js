@@ -1,9 +1,7 @@
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { FormError } from "~/components/form";
-import { type } from "~/schemas";
+import { type, useFormWithSchema } from "~/schemas";
 
 const Form = styled.form`
   display: inline-block;
@@ -47,9 +45,7 @@ export default function TypeForm({ onSubmit }) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(type),
-  });
+  } = useFormWithSchema(type);
 
   return (
     <center>
