@@ -116,21 +116,21 @@ export default function ProfileForm({
           </DropdownContainer>
         </DropdownArea>
         <DropdownContainer>
-          <FormInput {...register("name")} placeholder="Enter name"></FormInput>
+          <FormInput {...register("name")} placeholder="Enter name" />
           <InputLabel>Enter DOB</InputLabel>
-          <FormInput {...register("dob")} type="date"></FormInput>
+          <FormInput {...register("dob")} type="date" />
           <DescriptionBox
             {...register("description")}
             placeholder="Enter a description..."
             cols="50"
             rows="5"
-          ></DescriptionBox>
+          />
           <InputLabel>Picture</InputLabel>
           <FormInput
-            {...register("picture")}
+            {...register("image")}
             type="file"
             accept="image/png, image/jpeg"
-          ></FormInput>
+          />
           <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
         </DropdownContainer>
         <DropdownContainer />

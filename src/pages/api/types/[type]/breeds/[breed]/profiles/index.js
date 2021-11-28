@@ -33,19 +33,22 @@ handler.post((req, res) => {
     }
 
     const { availabilityId, dob, dispositionIds, ...data } = fields;
-    const picture = await fs.readFile(files.picture.filepath);
+    const { image } = files;
 
     const result = await createProfile({
+      ...data,
+      dob: new Date(dob),
       breedId: req.breed.id,
       availabilityId: Number(availabilityId),
-      dob: new Date(dob),
-      ...data,
-      picture,
       dispositionIds: dispositionIds.split(",").map((id) => Number(id)),
+      image: {
+        name: `${image.newFilename}/${image.originalFilename}`,
+        mimeType: image.mimetype,
+        contents: await fs.readFile(image.filepath),
+      },
     });
 
     res.status(201).json(result);
-    res.end();
   });
 });
 

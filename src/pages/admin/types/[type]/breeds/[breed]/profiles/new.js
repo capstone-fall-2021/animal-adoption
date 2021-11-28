@@ -49,14 +49,14 @@ export default function NewProfile({
 }) {
   const router = useRouter();
 
-  async function handleSubmit({ picture, ...data }) {
+  async function handleSubmit({ image, ...data }) {
     const formData = new FormData();
 
     for (const [k, v] of Object.entries(data)) {
       formData.append(k, v);
     }
 
-    formData.append("picture", picture[0]);
+    formData.append("image", image[0]);
 
     await fetch(`/api/types/${type}/breeds/${breed}/profiles`, {
       method: "POST",
