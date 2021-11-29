@@ -144,6 +144,7 @@ export default function ProfileForm({
             {...register("image")}
             type="file"
             accept="image/png, image/jpeg"
+            required
           />
           {errors.image && <FormError error={errors.image} />}
           <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
