@@ -14,9 +14,21 @@ export async function getServerSideProps(context) {
     };
   }
 
+  const { dob, breed, availability, dispositions, images, createdAt, ...rest } =
+    await findProfileById(Number(context.query.id));
+
   return {
     props: {
-      profile: await findProfileById(context.query.id),
+      profile: {
+        ...rest,
+        type: breed.type.name,
+        breed: breed.name,
+        availability: availability.description,
+        dispositions: dispositions.map((d) => d.disposition.description),
+        image: images[0].name,
+        dob: dob.toISOString(),
+        createdAt: createdAt.toISOString(),
+      },
     },
   };
 }
