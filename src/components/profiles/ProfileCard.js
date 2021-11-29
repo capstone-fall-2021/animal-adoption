@@ -4,18 +4,6 @@ import styled from "styled-components";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const Grid = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin-top: 3rem;
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
-`;
-
 const Card = styled(motion.li)`
   margin: 1rem;
   flex-basis: 45%;
@@ -29,7 +17,7 @@ const Card = styled(motion.li)`
 `;
 
 export default function ProfileCard({
-  // id,
+  id,
   name,
   availability,
   type,
@@ -39,55 +27,43 @@ export default function ProfileCard({
 }) {
   return (
     <>
-      <Grid>
-        <Card
-          whileHover={{
-            position: "relative",
-            zIndex: 1,
-            background: "white",
-            scale: [1, 1.4, 1.2],
-            transition: {
-              duration: 0.2,
-            },
-          }}
-        >
-          <Link href="/animal/[name]" as={`/animal/${name}`} passHref>
-            <a>
+      <Card
+        whileHover={{
+          position: "relative",
+          zIndex: 1,
+          background: "white",
+          scale: [1, 1.4, 1.2],
+          transition: {
+            duration: 0.2,
+          },
+        }}
+      >
+        <Link href="/profiles/[id]" as={`/profiles/${id}`} passHref>
+          <a>
+            <center>
               <ProfileImage path={`/api/images/${image}`} alt={name} />
+
               <h3>{name}</h3>
               <p>{availability}</p>
               <p>
                 {type} / {breed}
               </p>
-              <ul>
-                {dispositions.map((disposition) => (
-                  <li key={disposition}>{disposition}</li>
-                ))}
-              </ul>
-            </a>
-          </Link>
-        </Card>
-        );
-      </Grid>
-      {/* <div>
-        <ProfileImage path={`/api/images/${image}`} alt={name} />
-        <div>{name}</div>
-        <div>{availability}</div>
-        <div>
-          {type} / {breed}
-        </div>
-        <ul>
-          {dispositions.map((disposition) => (
-            <li key={disposition}>{disposition}</li>
-          ))}
-        </ul>
-      </div> */}
+            </center>
+            <ul>
+              {dispositions.map((disposition) => (
+                <li key={disposition}>{disposition}</li>
+              ))}
+            </ul>
+          </a>
+        </Link>
+      </Card>
+      );
     </>
   );
 }
 
 ProfileCard.propTypes = {
-  // id: PropTypes.number,
+  id: PropTypes.number,
   name: PropTypes.string,
   availability: PropTypes.string,
   type: PropTypes.string,
