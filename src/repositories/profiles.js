@@ -86,6 +86,50 @@ export function findFilteredProfiles(filters = {}) {
   });
 }
 
+export function findProfileById(id) {
+  return prisma.profile.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      dob: true,
+      breed: {
+        select: {
+          name: true,
+          type: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      availability: {
+        select: {
+          description: true,
+        },
+      },
+      dispositions: {
+        select: {
+          disposition: {
+            select: {
+              description: true,
+            },
+          },
+        },
+      },
+      images: {
+        select: {
+          name: true,
+        },
+      },
+      createdAt: true,
+    },
+  });
+}
+
 export function findProfilesByBreedId(breedId) {
   return prisma.profile.findMany({
     where: {
