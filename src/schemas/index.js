@@ -1,4 +1,5 @@
 export { default as breed } from "./breed";
+export { default as profile } from "./profile";
 export { default as disposition } from "./disposition";
 export { default as registration } from "./registration";
 export { default as type } from "./type";
