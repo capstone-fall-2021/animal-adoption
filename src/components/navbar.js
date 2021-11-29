@@ -134,9 +134,11 @@ export default function Navbar({ toggle }) {
           <NavLink href="/news" passHref activeStyle>
             News
           </NavLink>
-          <NavLink href="/account" passHref activeStyle>
-            Account
-          </NavLink>
+          {session && (
+            <NavLink href="/account" passHref activeStyle>
+              Account
+            </NavLink>
+          )}
         </NavMenu>
         <NavMenu>
           <NavBtn>
