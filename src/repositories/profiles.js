@@ -1,11 +1,21 @@
+import fs from "fs/promises";
+import mime from "mime-types";
+import { v4 as uuidv4 } from "uuid";
 import prisma from "~/prisma";
 
-export function findProfiles(options = {}) {
-  const { type, breed, disposition, availability } = options;
-  const orderBy = options.orderBy ?? {};
-  const where = {};
+export function findFilteredProfiles(filters = {}) {
+  const { type, breed, disposition, createdAt } = filters;
+  const where = {
+    availability: {
+      is: {
+        description: {
+          in: ["Available", "Pending"],
+        },
+      },
+    },
+  };
 
-  if (type !== undefined) {
+  if (type) {
     where.breed = {
       type: {
         name: type,
@@ -13,38 +23,48 @@ export function findProfiles(options = {}) {
     };
   }
 
-  if (breed !== undefined) {
+  if (breed) {
     where.breed = {
       name: breed,
       ...where.breed,
     };
   }
 
-  if (disposition !== undefined) {
-    where.profileDispositions = {
+  if (disposition) {
+    where.dispositions = {
       some: {
         disposition: {
-          description: disposition,
+          id: Number(disposition),
         },
       },
     };
   }
 
-  if (availability !== undefined) {
-    where.availability = {
-      description: availability,
+  if (createdAt) {
+    where.createdAt = {
+      gte: new Date(createdAt),
     };
   }
 
   return prisma.profile.findMany({
     where,
-    orderBy,
     select: {
+      id: true,
       name: true,
       description: true,
-      pictures: {
+      breed: {
         select: {
-          image: true,
+          name: true,
+          type: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      availability: {
+        select: {
+          description: true,
         },
       },
       dispositions: {
@@ -56,11 +76,12 @@ export function findProfiles(options = {}) {
           },
         },
       },
-      availability: {
+      images: {
         select: {
-          description: true,
+          name: true,
         },
       },
+      createdAt: true,
     },
   });
 }
@@ -85,7 +106,7 @@ export function findProfilesByBreedId(breedId) {
   });
 }
 
-export function createProfile({ dispositionIds, image, ...profile }) {
+export async function createProfile({ dispositionIds, image, ...profile }) {
   return prisma.profile.create({
     data: {
       ...profile,
@@ -95,7 +116,13 @@ export function createProfile({ dispositionIds, image, ...profile }) {
         })),
       },
       images: {
-        create: [image],
+        create: [
+          {
+            name: `${uuidv4()}.${mime.extension(image.mimeType)}`,
+            mimeType: image.mimeType,
+            contents: await fs.readFile(image.path),
+          },
+        ],
       },
     },
   });

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { FormError } from "~/components/form";
+import { profile, useFormWithSchema } from "~/schemas";
 
 const DropdownArea = styled.div`
   display: flex;
@@ -88,7 +89,11 @@ export default function ProfileForm({
   availabilities,
   onSubmit,
 }) {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormWithSchema(profile);
 
   return (
     <FormContainer>
@@ -103,6 +108,9 @@ export default function ProfileForm({
                 </option>
               ))}
             </select>
+            {errors.dispositionIds && (
+              <FormError error={errors.dispositionIds} />
+            )}
           </DropdownContainer>
           <DropdownContainer>
             <label>Availability</label>
@@ -113,24 +121,32 @@ export default function ProfileForm({
                 </option>
               ))}
             </select>
+            {errors.availabilityId && (
+              <FormError error={errors.availabilityId} />
+            )}
           </DropdownContainer>
         </DropdownArea>
         <DropdownContainer>
           <FormInput {...register("name")} placeholder="Enter name" />
+          {errors.name && <FormError error={errors.name} />}
           <InputLabel>Enter DOB</InputLabel>
           <FormInput {...register("dob")} type="date" />
+          {errors.dob && <FormError error={errors.dob} />}
           <DescriptionBox
             {...register("description")}
             placeholder="Enter a description..."
             cols="50"
             rows="5"
           />
+          {errors.description && <FormError error={errors.description} />}
           <InputLabel>Picture</InputLabel>
           <FormInput
             {...register("image")}
             type="file"
             accept="image/png, image/jpeg"
+            required
           />
+          {errors.image && <FormError error={errors.image} />}
           <SubmitBtnLink type="submit">Submit</SubmitBtnLink>
         </DropdownContainer>
         <DropdownContainer />

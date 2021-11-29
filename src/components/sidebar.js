@@ -100,17 +100,6 @@ const Sidebar = ({ isOpen, toggle }) => {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink href="/about" passhref isOpen={isOpen} onClick={toggle}>
-            About
-          </SidebarLink>
-          <SidebarLink
-            href="/profiles"
-            passhref
-            isOpen={isOpen}
-            onClick={toggle}
-          >
-            Animals
-          </SidebarLink>
           <SidebarLink href="/news" passhref isOpen={isOpen} onClick={toggle}>
             News
           </SidebarLink>

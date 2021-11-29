@@ -1,8 +1,8 @@
-import styles from "~/components/layout.module.css";
+import { RegistrationForm } from "./";
 
-export default function About() {
+export default function NewUserLanding() {
   return (
-    <div className={styles.column_section}>
+    <div>
       <h1>About</h1>
       <p>
         This website is for people looking for animal companionship. Animal
@@ -13,6 +13,9 @@ export default function About() {
         provide a place where you can be informed about the personality of each
         animal before making a decision to adopt them.
       </p>
+
+      <h1>Sign up today!</h1>
+      <RegistrationForm />
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import fs from "fs/promises";
 import formidable from "formidable";
 import {
   connect,
@@ -42,9 +41,8 @@ handler.post((req, res) => {
       availabilityId: Number(availabilityId),
       dispositionIds: dispositionIds.split(",").map((id) => Number(id)),
       image: {
-        name: `${image.newFilename}/${image.originalFilename}`,
+        path: image.filepath,
         mimeType: image.mimetype,
-        contents: await fs.readFile(image.filepath),
       },
     });
 
