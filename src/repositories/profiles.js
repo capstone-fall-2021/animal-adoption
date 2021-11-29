@@ -5,7 +5,15 @@ import prisma from "~/prisma";
 
 export function findFilteredProfiles(filters = {}) {
   const { type, breed, disposition, createdAt } = filters;
-  const where = {};
+  const where = {
+    availability: {
+      is: {
+        description: {
+          in: ["Available", "Pending"],
+        },
+      },
+    },
+  };
 
   if (type) {
     where.breed = {
