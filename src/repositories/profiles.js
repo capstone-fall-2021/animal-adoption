@@ -1,3 +1,6 @@
+import fs from "fs/promises";
+import mime from "mime-types";
+import { v4 as uuidv4 } from "uuid";
 import prisma from "~/prisma";
 
 export function findFilteredProfiles(filters = {}) {
@@ -95,7 +98,7 @@ export function findProfilesByBreedId(breedId) {
   });
 }
 
-export function createProfile({ dispositionIds, image, ...profile }) {
+export async function createProfile({ dispositionIds, image, ...profile }) {
   return prisma.profile.create({
     data: {
       ...profile,
@@ -105,7 +108,13 @@ export function createProfile({ dispositionIds, image, ...profile }) {
         })),
       },
       images: {
-        create: [image],
+        create: [
+          {
+            name: `${uuidv4()}.${mime.extension(image.mimeType)}`,
+            mimeType: image.mimeType,
+            contents: await fs.readFile(image.path),
+          },
+        ],
       },
     },
   });

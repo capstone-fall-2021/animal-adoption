@@ -1,5 +1,10 @@
+const fs = require("fs/promises");
+const path = require("path");
+const mime = require("mime-types");
+const { v4: uuidv4 } = require("uuid");
 const { PrismaClient } = require("@prisma/client");
 const { CAT_BREEDS, DOG_BREEDS, OTHER_BREEDS } = require("./breeds");
+const profiles = require("./profiles");
 
 const prisma = new PrismaClient();
 
@@ -66,7 +71,34 @@ async function main() {
 
   promises.push(prisma.user.create({ data: user }));
 
+  // seed initial data
   await Promise.all(promises);
+
+  // seed profiles
+  await Promise.all(
+    profiles.map(async ({ dob, dispositionIds, image, ...profile }) =>
+      prisma.profile.create({
+        data: {
+          ...profile,
+          dob: new Date(dob),
+          dispositions: {
+            create: dispositionIds.map((dispositionId) => ({
+              dispositionId,
+            })),
+          },
+          images: {
+            create: [
+              {
+                name: `${uuidv4()}${path.extname(image)}`,
+                mimeType: mime.lookup(image),
+                contents: await fs.readFile(path.resolve(__dirname, image)),
+              },
+            ],
+          },
+        },
+      })
+    )
+  );
 }
 
 main()
