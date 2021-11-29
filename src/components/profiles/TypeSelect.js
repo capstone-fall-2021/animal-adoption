@@ -1,8 +1,14 @@
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
+const SelectType = styled.select`
+  margin-right: 10px;
+  height: 30px;
+  border-radius: 5px;
+`;
 export default function TypeSelect({ options, onChange, ...props }) {
   return (
-    <select {...props} onChange={onChange} defaultValue="">
+    <SelectType {...props} onChange={onChange} defaultValue="">
       <option value="" disabled>
         Filter by type
       </option>
@@ -11,7 +17,7 @@ export default function TypeSelect({ options, onChange, ...props }) {
           {option.name}
         </option>
       ))}
-    </select>
+    </SelectType>
   );
 }
 

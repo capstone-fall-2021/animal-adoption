@@ -1,11 +1,15 @@
 import PropTypes from "prop-types";
 
-export default function ProfileImage({ path, alt }) {
-  // eslint-disable-next-line @next/next/no-img-element
-  return <img src={path} alt={alt} width="200" height="150" />;
+export default function ProfileImage({ name, alt, width = 200, height = 200 }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={`/api/images/${name}`} alt={alt} width={width} height={height} />
+  );
 }
 
 ProfileImage.propTypes = {
-  path: PropTypes.string,
+  name: PropTypes.string,
   alt: PropTypes.string,
+  width: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+  height: PropTypes.oneOf(PropTypes.string, PropTypes.number),
 };
