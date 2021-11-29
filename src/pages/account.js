@@ -9,20 +9,12 @@ export default function Account() {
         <h1>Account</h1>
       </center>
       <center>
-        <Link href="/profiles/create" passhref>
-          Add Profile
+        <Link href="/admin/types" passhref>
+          Add Type, Breed, or Profile
         </Link>
         <br />
-        <Link href="/dispositions/create" passhref>
+        <Link href="/admin/dispositions" passhref>
           Add Disposition
-        </Link>
-        <br />
-        <Link href="/types/create" passhref>
-          Add Type
-        </Link>
-        <br />
-        <Link href="/breeds/create" passhref>
-          Add Breed
         </Link>
         <br />
         <Link href="/profiles/delete" passhref>

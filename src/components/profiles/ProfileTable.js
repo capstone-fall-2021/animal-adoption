@@ -1,4 +1,22 @@
 import PropTypes from "prop-types";
+import styled from "styled-components";
+
+const ProfTable = styled.table`
+  width: 50%;
+  tr,
+  th {
+    border-bottom: 1px solid black;
+    &:hover {
+      background-color: #d6eeee;
+    }
+  }
+  tbody td {
+    margin-right: 70%;
+  }
+  td:nth-child(odd) {
+    border-right: 1px solid black;
+  }
+`;
 
 export default function ProfileTable({ profiles }) {
   if (!profiles.length) {
@@ -6,7 +24,7 @@ export default function ProfileTable({ profiles }) {
   }
 
   return (
-    <table>
+    <ProfTable>
       <thead>
         <tr>
           <th>Name</th>
@@ -21,7 +39,7 @@ export default function ProfileTable({ profiles }) {
           </tr>
         ))}
       </tbody>
-    </table>
+    </ProfTable>
   );
 }
 

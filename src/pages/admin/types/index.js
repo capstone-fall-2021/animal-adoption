@@ -24,8 +24,11 @@ export default function Types({ types }) {
   return (
     <>
       <AdminNavbar />
-      <h1>Types</h1>
-      <button onClick={handleNewTypeClick}>New Type</button>
+      <center>
+        <h1>Types</h1>
+        <p>Select a type or add a new one</p>
+        <button onClick={handleNewTypeClick}>New Type</button>
+      </center>
       <TypeList types={types} />
     </>
   );
