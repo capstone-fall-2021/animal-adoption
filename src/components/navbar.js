@@ -131,18 +131,14 @@ export default function Navbar({ toggle }) {
           <FaBars />
         </MobileIcon>
         <NavMenu>
-          <NavLink href="/about" passHref activeStyle>
-            About
-          </NavLink>
-          <NavLink href="/profiles" passHref activeStyle>
-            Animals
-          </NavLink>
           <NavLink href="/news" passHref activeStyle>
             News
           </NavLink>
-          <NavLink href="/account" passHref activeStyle>
-            Account
-          </NavLink>
+          {session && (
+            <NavLink href="/account" passHref activeStyle>
+              Account
+            </NavLink>
+          )}
         </NavMenu>
         <NavMenu>
           <NavBtn>
