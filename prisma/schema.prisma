@@ -81,6 +81,8 @@ model Favorite {
   userId    Int
   profile   Profile @relation(fields: [profileId], references: [id])
   profileId Int
+
+  @@unique([userId, profileId])
 }
 
 // NextAuth
