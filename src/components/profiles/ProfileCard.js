@@ -14,6 +14,17 @@ const Card = styled(motion.li)`
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+  &:hover,
+  &:focus,
+  &:active {
+    color: #0070f3;
+    border-color: #0070f3;
+  }
+`;
+
+const CardHeader = styled.h3`
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
 `;
 
 export default function ProfileCard({
@@ -38,26 +49,22 @@ export default function ProfileCard({
           },
         }}
       >
-        <Link href="/profiles/[id]" as={`/profiles/${id}`} passHref>
-          <a>
-            <center>
-              <ProfileImage path={`/api/images/${image}`} alt={name} />
-
-              <h3>{name}</h3>
-              <p>{availability}</p>
-              <p>
-                {type} / {breed}
-              </p>
-            </center>
-            <ul>
-              {dispositions.map((disposition) => (
-                <li key={disposition}>{disposition}</li>
-              ))}
-            </ul>
-          </a>
-        </Link>
+        <a href={`/profiles/${id}`} as={`/profiles/${id}`} passHref>
+          <center>
+            <ProfileImage path={`/api/images/${image}`} alt={name} />
+            <CardHeader>{name}</CardHeader>
+            <p>{availability}</p>
+            <p>
+              {type} / {breed}
+            </p>
+          </center>
+          <ul>
+            {dispositions.map((disposition) => (
+              <li key={disposition}>{disposition}</li>
+            ))}
+          </ul>
+        </a>
       </Card>
-      );
     </>
   );
 }
