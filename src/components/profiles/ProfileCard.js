@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import ProfileImage from "./ProfileImage";
 import styled from "styled-components";
-import Link from "next/link";
 import { motion } from "framer-motion";
 
 const Card = styled(motion.li)`
@@ -51,7 +50,7 @@ export default function ProfileCard({
       >
         <a href={`/profiles/${id}`} as={`/profiles/${id}`} passHref>
           <center>
-            <ProfileImage path={`/api/images/${image}`} alt={name} />
+            <ProfileImage name={image} alt={name} />
             <CardHeader>{name}</CardHeader>
             <p>{availability}</p>
             <p>

@@ -23,7 +23,8 @@ const Grid = styled.ul`
   max-width: 800px;
   margin-top: 3rem;
   list-style: none;
-  margin-left: 10%;
+  margin-left: 30%;
+  margin-right: 20%;
   padding-left: 0;
 `;
 
