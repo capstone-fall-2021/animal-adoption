@@ -32,8 +32,11 @@ export default function Types({ type, breeds }) {
   return (
     <div>
       <AdminNavbar />
-      <h1>Type: {type}</h1>
-      <button onClick={handleNewBreedClick}>New Breed</button>
+      <center>
+        <h1>Type: {type}</h1>
+        <p>Select a breed or add a new one</p>
+        <button onClick={handleNewBreedClick}>New Breed</button>
+      </center>
       <BreedList type={type} breeds={breeds} />
     </div>
   );

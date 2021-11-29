@@ -10,7 +10,7 @@ const Card = styled(motion.li)`
   text-align: left;
   color: inherit;
   text-decoration: none;
-  border: 1px solid #eaeaea;
+  border: 1px solid lightgray;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   &:hover,
@@ -22,7 +22,7 @@ const Card = styled(motion.li)`
 `;
 
 const CardHeader = styled.h3`
-  margin: 0 0 1rem 0;
+  margin: 0 0 1em 0;
   font-size: 1.5rem;
 `;
 
@@ -51,9 +51,9 @@ export default function ProfileCard({
         <a href={`/profiles/${id}`} as={`/profiles/${id}`} passHref>
           <center>
             <ProfileImage name={image} alt={name} />
-            <CardHeader>{name}</CardHeader>
-            <p>{availability}</p>
             <p>
+              <CardHeader>{name}</CardHeader>
+              {availability} <br />
               {type} / {breed}
             </p>
           </center>

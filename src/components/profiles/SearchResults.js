@@ -23,8 +23,6 @@ const Grid = styled.ul`
   max-width: 800px;
   margin-top: 3rem;
   list-style: none;
-  margin-left: 30%;
-  margin-right: 20%;
   padding-left: 0;
 `;
 
@@ -51,22 +49,28 @@ export default function SearchResults({ type, breed, disposition, createdAt }) {
   }
 
   return (
-    <div>
-      <Grid>
-        {data.map(({ id, name, availability, breed, dispositions, images }) => (
-          <ProfileCard
-            key={id}
-            id={id}
-            name={name}
-            availability={availability.description}
-            type={breed.type.name}
-            breed={breed.name}
-            dispositions={dispositions.map((d) => d.disposition.description)}
-            image={images[0]?.name}
-          />
-        ))}
-      </Grid>
-    </div>
+    <center>
+      <div>
+        <Grid>
+          {data.map(
+            ({ id, name, availability, breed, dispositions, images }) => (
+              <ProfileCard
+                key={id}
+                id={id}
+                name={name}
+                availability={availability.description}
+                type={breed.type.name}
+                breed={breed.name}
+                dispositions={dispositions.map(
+                  (d) => d.disposition.description
+                )}
+                image={images[0]?.name}
+              />
+            )
+          )}
+        </Grid>
+      </div>
+    </center>
   );
 }
 

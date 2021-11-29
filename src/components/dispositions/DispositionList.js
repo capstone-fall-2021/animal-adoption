@@ -1,12 +1,19 @@
 import PropTypes from "prop-types";
+import styled from "styled-components";
+
+const DispoList = styled.ul`
+  margin-left: 42%;
+  margin-right: 42%;
+  margin-top: 2%;
+`;
 
 export default function DispositionList({ dispositions }) {
   return (
-    <ul>
+    <DispoList>
       {dispositions.map(({ id, description }) => (
         <li key={id}>{description}</li>
       ))}
-    </ul>
+    </DispoList>
   );
 }
 
