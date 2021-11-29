@@ -65,6 +65,9 @@ const DetailsArea = styled.div`
   @media screen and (max-width: 812px) {
     margin-left: 4%;
   }
+  @media screen and (max-width: 1361px) {
+    margin-left: 15%;
+  }
 `;
 
 const DispoList = styled.ul`
@@ -132,12 +135,20 @@ const InterestedButt = styled.button`
 
 const InterestedButtContainer = styled.div`
   float: left;
-  margin-left: 30.5%;
-  margin-top: -11%;
+  margin-left: 29%;
+  margin-top: -9%;
   @media screen and (max-width: 812px) {
     margin-top: 0%;
     margin-left: 30%;
     margin-right: 20%;
+  }
+  @media screen and (max-width: 2158px) {
+    margin-left: 30%;
+    margin-bottom: 0.5%;
+  }
+  @media screen and (max-width: 1351px) {
+    margin-right: 30%;
+    margin-top: 1%;
   }
 `;
 
