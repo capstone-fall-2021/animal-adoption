@@ -36,10 +36,12 @@ export default function Breeds({ type, breed, profiles }) {
 
   return (
     <div>
-      <AdminNavbar />
-      <h1>Breed: {breed}</h1>
-      <button onClick={handleNewProfileClick}>New Profile</button>
-      <ProfileTable profiles={profiles} />
+      <center>
+        <AdminNavbar />
+        <h1>Breed: {breed}</h1>
+        <button onClick={handleNewProfileClick}>New Profile</button>
+        <ProfileTable profiles={profiles} />
+      </center>
     </div>
   );
 }

@@ -24,8 +24,10 @@ export default function Dispositions({ dispositions }) {
   return (
     <div>
       <AdminNavbar />
-      <h1>Dispositions</h1>
-      <button onClick={handleNewDispositionClick}>New Disposition</button>
+      <center>
+        <h1>Dispositions</h1>
+        <button onClick={handleNewDispositionClick}>New Disposition</button>
+      </center>
       <DispositionList dispositions={dispositions} />
     </div>
   );

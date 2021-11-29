@@ -5,7 +5,15 @@ import prisma from "~/prisma";
 
 export function findFilteredProfiles(filters = {}) {
   const { type, breed, disposition, createdAt } = filters;
-  const where = {};
+  const where = {
+    availability: {
+      is: {
+        description: {
+          in: ["Available", "Pending"],
+        },
+      },
+    },
+  };
 
   if (type) {
     where.breed = {
@@ -44,6 +52,50 @@ export function findFilteredProfiles(filters = {}) {
       id: true,
       name: true,
       description: true,
+      breed: {
+        select: {
+          name: true,
+          type: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      availability: {
+        select: {
+          description: true,
+        },
+      },
+      dispositions: {
+        select: {
+          disposition: {
+            select: {
+              description: true,
+            },
+          },
+        },
+      },
+      images: {
+        select: {
+          name: true,
+        },
+      },
+      createdAt: true,
+    },
+  });
+}
+
+export function findProfileById(id) {
+  return prisma.profile.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      dob: true,
       breed: {
         select: {
           name: true,

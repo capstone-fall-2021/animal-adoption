@@ -1,27 +1,15 @@
-import Image from "next/image";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 
-export default function ProfileImage({ path, alt }) {
-  const [src, setSrc] = useState("");
-
-  useEffect(() => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => setSrc(reader.result), false);
-
-    fetch(path)
-      .then((response) => response.blob())
-      .then((blob) => reader.readAsDataURL(blob));
-  }, [path]);
-
-  if (!src) {
-    return null;
-  }
-
-  return <Image src={src} alt={alt} width="200" height="150" />;
+export default function ProfileImage({ name, alt, width = 200, height = 200 }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={`/api/images/${name}`} alt={alt} width={width} height={height} />
+  );
 }
 
 ProfileImage.propTypes = {
-  path: PropTypes.string,
+  name: PropTypes.string,
   alt: PropTypes.string,
+  width: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+  height: PropTypes.oneOf(PropTypes.string, PropTypes.number),
 };

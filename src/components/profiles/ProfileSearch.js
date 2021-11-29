@@ -32,15 +32,17 @@ export default function ProfileSearch({ types, dispositions }) {
 
   return (
     <>
-      <FilterContainer>
-        <TypeSelect options={types} onChange={handleTypeChange} />
-        <BreedSelect type={type} onChange={handleBreedChange} />
-        <DispositionSelect
-          options={dispositions}
-          onChange={handleDispositionChange}
-        />
-        <DateInput onChange={handleCreatedAtChange} />
-      </FilterContainer>
+      <center>
+        <FilterContainer>
+          <TypeSelect options={types} onChange={handleTypeChange} />
+          <BreedSelect type={type} onChange={handleBreedChange} />
+          <DispositionSelect
+            options={dispositions}
+            onChange={handleDispositionChange}
+          />
+          <DateInput onChange={handleCreatedAtChange} />
+        </FilterContainer>
+      </center>
       <SearchResults
         type={type}
         breed={breed}
