@@ -10,6 +10,6 @@ export default function ProfileImage({ name, alt, width = 200, height = 200 }) {
 ProfileImage.propTypes = {
   name: PropTypes.string,
   alt: PropTypes.string,
-  width: PropTypes.oneOf(PropTypes.string, PropTypes.number),
-  height: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+  width: PropTypes.number,
+  height: PropTypes.number,
 };
