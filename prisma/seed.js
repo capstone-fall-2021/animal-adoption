@@ -3,102 +3,103 @@ const path = require("path");
 const mime = require("mime-types");
 const { v4: uuidv4 } = require("uuid");
 const { PrismaClient } = require("@prisma/client");
-const { CAT_BREEDS, DOG_BREEDS, OTHER_BREEDS } = require("./breeds");
-const profiles = require("./profiles");
+const data = require("./seed.json");
 
 const prisma = new PrismaClient();
 
-function mapBreed(name) {
-  return {
-    name,
-  };
-}
-
-const types = [
-  {
-    name: "dog",
-    breeds: {
-      create: DOG_BREEDS.map(mapBreed),
-    },
-  },
-  {
-    name: "cat",
-    breeds: {
-      create: CAT_BREEDS.map(mapBreed),
-    },
-  },
-  {
-    name: "other",
-    breeds: {
-      create: OTHER_BREEDS.map(mapBreed),
-    },
-  },
-];
-
-const dispositions = [
-  { description: "Good with children" },
-  { description: "Good with other animals" },
-  { description: "Animal must be leashed at all times" },
-];
-
-const availabilities = [
-  { description: "Not Available" },
-  { description: "Available" },
-  { description: "Pending" },
-  { description: "Adopted" },
-];
-
-const user = {
-  email: "test@example.com",
-  password: "$2b$10$TncgHn9sFEWmlieQgY9JmOqt/RxyZxuySRLr8S5VE/9gPQliURZwe",
-  admin: true,
-};
-
 async function main() {
-  const promises = [];
+  await prisma.availability.createMany({
+    data: data.availabilities.map((description) => ({ description })),
+  });
 
-  for (const type of types) {
-    promises.push(prisma.type.create({ data: type }));
-  }
+  console.log("\n📅  Availabilities added.");
 
-  for (const disposition of dispositions) {
-    promises.push(prisma.disposition.create({ data: disposition }));
-  }
+  await prisma.disposition.createMany({
+    data: data.dispositions.map((description) => ({ description })),
+  });
 
-  for (const availability of availabilities) {
-    promises.push(prisma.availability.create({ data: availability }));
-  }
+  console.log("\n👺  Dispositions added.");
 
-  promises.push(prisma.user.create({ data: user }));
-
-  // seed initial data
-  await Promise.all(promises);
-
-  // seed profiles
   await Promise.all(
-    profiles.map(async ({ dob, dispositionIds, image, ...profile }) =>
-      prisma.profile.create({
+    data.types.map(({ name, breeds }) =>
+      prisma.type.create({
         data: {
-          ...profile,
-          dob: new Date(dob),
-          dispositions: {
-            create: dispositionIds.map((dispositionId) => ({
-              dispositionId,
-            })),
-          },
-          images: {
-            create: [
-              {
-                name: `${uuidv4()}${path.extname(image)}`,
-                mimeType: mime.lookup(image),
-                contents: await fs.readFile(path.resolve(__dirname, image)),
-              },
-            ],
+          name,
+          breeds: {
+            createMany: {
+              data: breeds.map((name) => ({ name })),
+            },
           },
         },
       })
     )
   );
+
+  console.log("\n🐶  Animals added.");
+
+  await prisma.user.createMany({ data: data.users });
+
+  console.log("\n👥  Users added.");
+
+  // map profile properties to their ids
+  const [availabilities, dispositions, breeds] = await Promise.all([
+    mapResults(prisma.availability.findMany()),
+    mapResults(prisma.disposition.findMany()),
+    mapResults(prisma.breed.findMany()),
+  ]);
+
+  // seed profiles
+  await Promise.all(
+    data.profiles.map(
+      async ({
+        dob,
+        availability,
+        breed,
+        dispositions: _dispositions,
+        image,
+        ...rest
+      }) =>
+        prisma.profile.create({
+          data: {
+            ...rest,
+            dob: new Date(dob),
+            breedId: breeds.get(breed),
+            availabilityId: availabilities.get(availability),
+            dispositions: {
+              create: _dispositions.map((description) => ({
+                dispositionId: dispositions.get(description),
+              })),
+            },
+            images: {
+              create: [
+                {
+                  name: `${uuidv4()}${path.extname(image)}`,
+                  mimeType: mime.lookup(image),
+                  contents: await fs.readFile(path.resolve(__dirname, image)),
+                },
+              ],
+            },
+          },
+        })
+    )
+  );
+
+  console.log("\n💜  Profiles added.");
+}
+
+async function mapResults(promise) {
+  const results = await promise;
+  const map = new Map();
+
+  for (const { id, name, description } of results) {
+    if (name) {
+      map.set(name, id);
+    } else {
+      map.set(description, id);
+    }
+  }
+
+  return map;
 }
 
 main()
