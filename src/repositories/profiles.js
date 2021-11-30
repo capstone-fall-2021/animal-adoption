@@ -130,6 +130,17 @@ export function findProfileById(id) {
   });
 }
 
+export function updateAvailabilityById(id, availabilityId) {
+  return prisma.profile.update({
+    where: {
+      id,
+    },
+    data: {
+      availabilityId,
+    },
+  });
+}
+
 export function findProfilesByBreedId(breedId) {
   return prisma.profile.findMany({
     where: {
@@ -138,6 +149,7 @@ export function findProfilesByBreedId(breedId) {
     select: {
       id: true,
       name: true,
+      availabilityId: true,
       availability: {
         select: {
           description: true,
