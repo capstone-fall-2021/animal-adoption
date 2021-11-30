@@ -2,7 +2,7 @@
 import { Provider as SessionProvider } from "next-auth/client";
 import { $fetch } from "ohmyfetch";
 import { SWRConfig } from "swr";
-import Layout from "~/components/Layout";
+import Layout from "~/components/layout";
 import "~/styles/globals.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
