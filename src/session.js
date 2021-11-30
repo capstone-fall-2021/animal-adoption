@@ -15,7 +15,7 @@ export function withAdminSession(callback) {
   return async (context) => {
     const user = await getSessionUser(context);
 
-    if (!user) {
+    if (!user || !user.admin) {
       return {
         notFound: true,
       };

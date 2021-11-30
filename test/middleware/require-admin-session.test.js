@@ -42,7 +42,7 @@ describe("requireAdminSession", () => {
 
     describe("when the user is an admin", () => {
       beforeEach(() => {
-        getSessionUser.mockResolvedValue(1);
+        getSessionUser.mockResolvedValue({ admin: true });
       });
 
       it("calls the next middleware", async () => {
@@ -53,7 +53,7 @@ describe("requireAdminSession", () => {
 
     describe("when the user is not an admin", () => {
       beforeEach(() => {
-        getSessionUser.mockResolvedValue(null);
+        getSessionUser.mockResolvedValue({ admin: false });
       });
 
       it("does not call the next middleware", async () => {

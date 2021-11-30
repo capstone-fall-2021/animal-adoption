@@ -5,7 +5,7 @@ export default function requireAdminSession(methods = []) {
     if (methods.includes(req.method)) {
       const user = await getSessionUser({ req });
 
-      if (!user) {
+      if (!user || !user.admin) {
         res.status(401).send("Unauthorized");
         return;
       }
