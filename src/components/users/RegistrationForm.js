@@ -21,15 +21,10 @@ const SubmitButt = styled.input`
     background-color: rgb(250, 187, 1);
     color: black;
   }
+  &:active,
   &:hover {
-    background: rgb(250, 187, 1);
-    color: rgb(255, 255, 255);
+    background: rgb(250, 213, 1);
     scale: 1;
-  }
-  &:focus,
-  &:active {
-    background: rgb(245, 184, 0);
-    color: rgb(255, 255, 255);
   }
   border-radius: 8px;
   height: 30px;
