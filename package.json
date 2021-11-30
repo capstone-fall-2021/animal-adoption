@@ -11,9 +11,13 @@
     "test:watch": "jest --watch",
     "prepare": "is-ci || husky install"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
+  "cacheDirectories": [".next/cache"],
   "lint-prepush": {
     "base": "main",
     "tasks": {
