@@ -5,6 +5,7 @@ import { findProfileById } from "~/repositories/profiles";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { BiArrowBack } from "react-icons/bi";
+import { $fetch } from "ohmyfetch";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -168,7 +169,18 @@ export default function Profile({ profile }) {
   var creation_date = new Date(profile.createdAt).toLocaleDateString("en-US", {
     timeZone: "UTC",
   });
-  // Return profile detail component here and pass profile as props
+
+  async function handleInterestedButtonClick() {
+    await $fetch("/api/favorite", {
+      method: "POST",
+      body: {
+        profileId: profile.id,
+      },
+    });
+
+    router.push("/account");
+  }
+
   return (
     <>
       <ButtonContainer>
@@ -246,7 +258,9 @@ export default function Profile({ profile }) {
           </DetailsTable>
         </DetailsArea>
         <InterestedButtContainer>
-          <InterestedButt>Interested in Adopting</InterestedButt>
+          <InterestedButt onClick={handleInterestedButtonClick}>
+            Interested in Adopting
+          </InterestedButt>
         </InterestedButtContainer>
       </center>
     </>
