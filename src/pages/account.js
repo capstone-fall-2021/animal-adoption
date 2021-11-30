@@ -76,7 +76,6 @@ const NameHeader = styled.a`
 `;
 
 export default function Account({ favorites }) {
-  console.log(favorites);
   return (
     <>
       <center>
