@@ -22,9 +22,9 @@ model Breed {
 }
 
 model Disposition {
-  id                  Int                  @id @default(autoincrement())
-  description         String
-  profileDispositions ProfileDisposition[]
+  id          Int                  @id @default(autoincrement())
+  description String
+  profiles    ProfileDisposition[]
 }
 
 model Availability {
@@ -62,6 +62,7 @@ model Profile {
   availabilityId Int
   dispositions   ProfileDisposition[]
   images         Image[]
+  favorites      Favorite[]
   createdAt      DateTime             @default(now())
   updatedAt      DateTime             @updatedAt
 }
@@ -72,6 +73,16 @@ model ProfileDisposition {
   profileId     Int
   disposition   Disposition @relation(fields: [dispositionId], references: [id])
   dispositionId Int
+}
+
+model Favorite {
+  id        Int     @id @default(autoincrement())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int
+
+  @@unique([userId, profileId])
 }
 
 // NextAuth
@@ -106,13 +117,14 @@ model Session {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   password      String
   image         String?
-  admin         Boolean   @default(false)
+  admin         Boolean    @default(false)
+  favorites     Favorite[]
   accounts      Account[]
   sessions      Session[]
 }
