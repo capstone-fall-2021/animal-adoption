@@ -54,9 +54,17 @@ const LinkListItem = styled.li`
   border-bottom: 1px solid black;
   margin-right: -127%;
   margin-left: -132%;
-  @media screen and (max-width: 383px) {
+  @media screen and (max-width: 812px) {
     margin-right: -1000%;
     margin-left: -1000%;
+  }
+  @media screen and (max-width: 1920px) {
+    margin-right: -150%;
+    margin-left: -190%;
+  }
+  @media screen and (max-width: 1024px) {
+    margin-right: -250%;
+    margin-left: -130%;
   }
 `;
 
