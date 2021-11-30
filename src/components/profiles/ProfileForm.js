@@ -84,6 +84,22 @@ const InputLabel = styled.label`
   }
 `;
 
+const ErrorDiv = styled.div`
+  margin-bottom: 1%;
+  margin-top: -10%;
+`;
+
+const DispoSelect = styled.select`
+  border-radius: 5px;
+  width: 140%;
+  margin-bottom: 2%;
+`;
+
+const AvailSelect = styled.select`
+  border-radius: 5px;
+  margin-bottom: 3%;
+`;
+
 export default function ProfileForm({
   dispositions,
   availabilities,
@@ -101,26 +117,26 @@ export default function ProfileForm({
         <DropdownArea>
           <DropdownContainer>
             <label>Disposition</label>
-            <select {...register("dispositionIds")} multiple>
+            <DispoSelect {...register("dispositionIds")} multiple>
               {dispositions.map(({ id, description }) => (
                 <option key={id} value={id}>
                   {description}
                 </option>
               ))}
-            </select>
+            </DispoSelect>
             {errors.dispositionIds && (
               <FormError error={errors.dispositionIds} />
             )}
           </DropdownContainer>
           <DropdownContainer>
             <label>Availability</label>
-            <select {...register("availabilityId")}>
+            <AvailSelect {...register("availabilityId")}>
               {availabilities.map(({ id, description }) => (
                 <option key={id} value={id}>
                   {description}
                 </option>
               ))}
-            </select>
+            </AvailSelect>
             {errors.availabilityId && (
               <FormError error={errors.availabilityId} />
             )}
@@ -128,10 +144,16 @@ export default function ProfileForm({
         </DropdownArea>
         <DropdownContainer>
           <FormInput {...register("name")} placeholder="Enter name" />
-          {errors.name && <FormError error={errors.name} />}
-          <InputLabel>Enter DOB</InputLabel>
+          <ErrorDiv>
+            {errors.name && <FormError error={errors.name} />}
+          </ErrorDiv>
+          <br />
+          <ErrorDiv>
+            <InputLabel>Enter DOB</InputLabel>
+          </ErrorDiv>
           <FormInput {...register("dob")} type="date" />
-          {errors.dob && <FormError error={errors.dob} />}
+          <ErrorDiv>{errors.dob && <FormError error={errors.dob} />}</ErrorDiv>
+          <br />
           <DescriptionBox
             {...register("description")}
             placeholder="Enter a description..."
@@ -139,6 +161,7 @@ export default function ProfileForm({
             rows="5"
           />
           {errors.description && <FormError error={errors.description} />}
+          <br />
           <InputLabel>Picture</InputLabel>
           <FormInput
             {...register("image")}
