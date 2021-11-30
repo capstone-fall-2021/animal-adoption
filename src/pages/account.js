@@ -52,8 +52,8 @@ const LinkListContainer = styled.div`
 
 const LinkListItem = styled.li`
   border-bottom: 1px solid black;
-  margin-right: -130%;
-  margin-left: -130%;
+  margin-right: -127%;
+  margin-left: -132%;
   @media screen and (max-width: 383px) {
     margin-right: -1000%;
     margin-left: -1000%;
