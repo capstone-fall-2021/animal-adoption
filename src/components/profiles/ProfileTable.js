@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import AvailabilityDropdown from "./AvailabilityDropdown";
 
 const ProfTable = styled.table`
   width: 50%;
@@ -18,7 +19,7 @@ const ProfTable = styled.table`
   }
 `;
 
-export default function ProfileTable({ profiles }) {
+export default function ProfileTable({ availabilities, profiles }) {
   if (!profiles.length) {
     return null;
   }
@@ -35,7 +36,15 @@ export default function ProfileTable({ profiles }) {
         {profiles.map((profile) => (
           <tr key={profile.id}>
             <td>{profile.name}</td>
-            <td>{profile.availability.description}</td>
+            <td>
+              <center>
+                <AvailabilityDropdown
+                  profileId={profile.id}
+                  availabilities={availabilities}
+                  value={profile.availabilityId}
+                />
+              </center>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -44,6 +53,7 @@ export default function ProfileTable({ profiles }) {
 }
 
 ProfileTable.propTypes = {
+  availabilities: PropTypes.arrayOf(PropTypes.object),
   profiles: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
