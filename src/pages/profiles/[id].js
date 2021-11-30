@@ -143,13 +143,21 @@ const InterestedButtContainer = styled.div`
     margin-left: 30%;
     margin-right: 20%;
   }
-  @media screen and (max-width: 2158px) {
-    margin-left: 30%;
+  @media screen and (max-width: 2669px) {
+    margin-left: 29%;
+    margin-right: 20%;
+    margin-top: -8%;
     margin-bottom: 0.5%;
   }
-  @media screen and (max-width: 1351px) {
+  @media screen and (max-width: 2071px) {
     margin-right: 30%;
-    margin-top: 1%;
+    margin-left: 30%;
+    margin-top: -10%;
+  }
+  @media screen and (max-width: 1360px) {
+    margin-right: 30%;
+    margin-left: 30%;
+    margin-top: 2%;
   }
 `;
 
