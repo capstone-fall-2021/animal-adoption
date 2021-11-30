@@ -1,26 +1,44 @@
-import React from "react";
 import Link from "next/link";
-import styles from "~/components/Layout.module.css";
+import PropTypes from "prop-types";
+import { getFavoritesByUserId } from "~/repositories/favorites";
+import { getSessionUser } from "~/session";
 
-export default function Account() {
+export async function getServerSideProps(context) {
+  const user = await getSessionUser(context);
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      favorites: await getFavoritesByUserId(user.id),
+    },
+  };
+}
+
+export default function Account({ favorites }) {
   return (
-    <div className={styles.section}>
-      <center>
-        <h1>Account</h1>
-      </center>
-      <center>
-        <Link href="/admin/types" passhref>
-          Add Type, Breed, or Profile
-        </Link>
-        <br />
-        <Link href="/admin/dispositions" passhref>
-          Add Disposition
-        </Link>
-        <br />
-        <Link href="/profiles/delete" passhref>
-          Delete a Profile
-        </Link>
-      </center>
-    </div>
+    <>
+      <h1>Favorites</h1>
+      <ul>
+        {favorites.map((favorite) => (
+          <li key={favorite.id}>
+            <Link href={`/profiles/${favorite.profile.id}`}>
+              <a>{favorite.profile.name}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
+
+Account.propTypes = {
+  favorites: PropTypes.arrayOf(PropTypes.object),
+};
