@@ -1,6 +1,27 @@
-import { RegistrationForm } from "./";
+import { useRouter } from "next/router";
+import { $fetch } from "ohmyfetch";
+import { useState } from "react";
+import RegistrationForm from "./RegistrationForm";
 
 export default function NewUserLanding() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+
+  async function handleSubmit(body) {
+    setError("");
+
+    try {
+      await $fetch("/api/register", {
+        method: "POST",
+        body,
+      });
+
+      router.push("/api/auth/signin");
+    } catch (e) {
+      setError(e.data);
+    }
+  }
+
   return (
     <div>
       <h1>About</h1>
@@ -15,7 +36,7 @@ export default function NewUserLanding() {
       </p>
 
       <h1>Sign up today!</h1>
-      <RegistrationForm />
+      <RegistrationForm onSubmit={handleSubmit} error={error} />
     </div>
   );
 }
