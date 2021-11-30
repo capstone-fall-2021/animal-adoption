@@ -12,7 +12,7 @@
   ],
   "types": [
     {
-      "name": "cats",
+      "name": "Cat",
       "breeds": [
         "Abyssinian",
         "American Bobtail",
@@ -64,11 +64,12 @@
         "Tonkinese",
         "Toyger",
         "Turkish Angora",
-        "Turkish Van"
+        "Turkish Van",
+        "Other"
       ]
     },
     {
-      "name": "dogs",
+      "name": "Dog",
       "breeds": [
         "Labrador Retriever",
         "French Bulldog",
@@ -264,11 +265,12 @@
         "American Foxhound",
         "Azawakh",
         "English Foxhound",
-        "Norwegian Lundehund"
+        "Norwegian Lundehund",
+        "Other"
       ]
     },
     {
-      "name": "other",
+      "name": "Other",
       "breeds": [
         "Goat",
         "Chicken",
@@ -293,7 +295,8 @@
         "Hedgehog",
         "Chinchilla",
         "Hermit Crab",
-        "Rabbit"
+        "Rabbit",
+        "Other"
       ]
     }
   ],
